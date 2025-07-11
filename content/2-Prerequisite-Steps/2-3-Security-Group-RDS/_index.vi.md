@@ -1,7 +1,7 @@
 ---
 title : "Tạo RDS Security Group"
 date: 2025-07-01
-weight : 1
+weight : 3
 chapter : false
 pre : " <b> 2.3 </b> "
 ---

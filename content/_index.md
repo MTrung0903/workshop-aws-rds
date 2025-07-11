@@ -1,5 +1,5 @@
 ---
-title : "Setting up an AWS account"
+title : "Deployment with Spring Boot and Docker"
 date: 2025-07-01
 weight : 1 
 chapter : false

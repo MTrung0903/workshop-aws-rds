@@ -1,7 +1,7 @@
 ---
 title : "Tạo EC2 Security Group"
 date: 2025-07-01
-weight : 1
+weight : 2
 chapter : false
 pre : " <b> 2.2 </b> "
 ---
