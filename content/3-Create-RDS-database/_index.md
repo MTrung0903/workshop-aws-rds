@@ -1,5 +1,5 @@
 ---
-title : "Create RDS database instance"
+title : "Create RDS database"
 date: 2025-07-01
 weight : 5
 chapter : false

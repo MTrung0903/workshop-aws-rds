@@ -1,9 +1,9 @@
 ---
 title : "Create DB Subnet Group"
 date: 2025-07-01
-weight : 4
+weight : 3
 chapter : false
-pre : " <b> 2.4 </b> "
+pre : " <b> 2.3 </b> "
 ---
 ## Create DB Subnet Group
 #### Create DB Subnet Group

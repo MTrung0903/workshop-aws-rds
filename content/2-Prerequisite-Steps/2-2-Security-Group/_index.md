@@ -1,5 +1,5 @@
 ---
-title : "Create EC2 Security Group"
+title : "Create Security Group"
 date: 2025-07-01
 weight : 2
 chapter : false
