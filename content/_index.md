@@ -1,46 +1,79 @@
 ---
-title : "Deployment with Spring Boot and Docker"
+title : " How to Deploy a Spring Boot Application on AWS with Docker"
 date: 2025-07-01
-weight : 1 
+weight : 1
 chapter : false
 ---
 
-# Creating your first AWS account
+# How to Deploy a Spring Boot Application on AWS with Docker
 
-#### Overview
-In this first lab, you will be creating your new **AWS** account and use Multi-factor Authentication (**MFA**) to improve your account security. Next, you will create an **Administrator Group** and **Admin User** to manage access to resources in your account instead of using the root user. \
-Finally, we will step through account authentication with **AWS Support** in the event you experience authentication problems.
+## General information
 
-#### AWS Account
-**An AWS account** is the basic container for all the AWS resources you can create as an AWS customer. By default, each AWS account will have a _root user_. The _root user_ has full access within your AWS account, and root user permissions cannot be limited. When you first create your AWS account, you will be assessing it as the _root user_.
+This document guides you through deploying a Spring Boot application (backend API) using Docker on Amazon EC2, integrating with Amazon ECR for Docker image storage, Amazon RDS for MySQL database, and Nginx as a reverse proxy. The guide is updated with the latest AWS features (as of July 2025) and optimized for production environments, while leveraging the AWS Free Tier to minimize costs.
 
-![Create Account](/images/1/0001.png?featherlight=false&width=90pc)
+---
 
-{{% notice note%}}
-As a best practice, do not use the AWS account _root user_ for any task where it's not required. Instead, create a new IAM user for each person that requires administrator access. Thereafter, the users in the administrators user group should set up the user groups, users, and so on, for the AWS account. All future interaction should be through the AWS account's users and their own keys instead of the root user. However, to perform some account and service management tasks, you must log in using the root user credentials.
-{{% /notice%}}
+## Objectives
 
-#### Multi-Factor Authentication (MFA)
-**MFA** adds extra security because it requires users to provide unique authentication from an AWS supported MFA mechanism in addition to their regular sign-in credentials when they access AWS websites or services.
+- Create and push a Docker image of a Spring Boot application to Amazon ECR.
+- Deploy the application on Amazon EC2 using Docker Compose.
+- Use Nginx as a reverse proxy to route traffic from port 80 to Spring Boot on port 8080.
+- Connect the application to a MySQL database on Amazon RDS (database `first_cloud_users`).
+- Ensure security, high availability (Multi-AZ), and easy resource cleanup.
 
-#### IAM User Group 
-An **IAM user group** is a collection of IAM users. User groups let you specify permissions for multiple users, which can make it easier to manage the permissions for those users. Any user in that user group automatically has the permissions that are assigned to the user group. 
+---
 
-#### IAM User
-An **IAM user** is an entity that you create in AWS to represent the person or application that uses it to interact with AWS. A user in AWS consists of a name and credentials. \
-Please note that an IAM user with administrator permissions is not the same thing as the AWS account root user.
+## Assumptions
 
+- You already have a **Spring Boot Docker image** (e.g. `trungho93/identity-service:0.9.0`) that has been tested to work well on your local environment or Docker Hub.
+- The Spring Boot application has the database configuration in the `application.yml` or `application.properties` file as follows:
 
-#### AWS Support
-AWS Basic Support offers all AWS customers access to our Resource Center, Service Health Dashboard, Product FAQs, Discussion Forums, and Support for Health Checks – at no additional charge. Customers who desire a deeper level of support can subscribe to AWS Support at the Developer, Business, or Enterprise level.
+```yaml
+spring:
+datasource:
+url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3306/first_cloud_users?useSSL=false&serverTimezone=UTC}
+driverClassName: com.mysql.cj.jdbc.Driver
+username: ${DBMS_USERNAME:root}
+password: ${DBMS_PASSWORD:09032003}
+jpa:
+hibernate:
+ddl-auto: update
+```
 
-Customers who choose AWS Support gain one-on-one, fast-response support from AWS engineers. The service helps customers use AWS's products and features. With pay-by-the-month pricing and unlimited support cases, customers are freed from long-term commitments. Customers with operational issues or technical questions can contact a team of support engineers and receive predictable response times and personalized support.
+- The application uses port **8080** (Spring Boot default).
 
+- You have access to:
+- **AWS Management Console**.
+- **AWS CLI** (version 2.x).
+- **Docker CLI** (latest version).
 
-#### Main Content
+- SSH key pair (`.pem` file) to access EC2.
 
-1. [Creating a new AWS Account](1-create-new-aws-account/)
-2. [Setting up MFA for the AWS Account root user](2-MFA-Setup-For-AWS-User-(root))
-3. [Creating an Administrator Accounts and Groups](3-create-admin-user-and-group/)
-4. [Getting support for Account Authentication](4-verify-new-account/)
-<!-- need to remove parenthesis for path in Hugo 0.88.1 for Windows-->
+- Local machine with root or sudo privileges to install tools.
+
+- You have installed **MobaXterm** to SSH into EC2.
+
+---
+
+## Main content
+
+1. Prepare infrastructure (VPC, Security Groups, IAM Role, DB Subnet Group).
+
+2. Create and push Docker image to Amazon ECR.
+3. Create EC2 instance.
+4. Install Docker, Nginx, and MySQL Client on EC2.
+5. Create RDS database instance.
+6. Deploy application with Docker Compose.
+7. Test application.
+8. Clean up resources.
+
+---
+
+## Important notes
+
+- **Helpful tip**: Consider using Amazon ECS or EKS to manage containers in production, instead of running directly on EC2.
+- **Security**: Configure Security Groups and VPCs properly, use AWS Secrets Manager to manage sensitive information.
+
+- **Cost**: Track costs via **AWS Cost Explorer** and clean up resources after the workshop to avoid additional costs.
+
+---

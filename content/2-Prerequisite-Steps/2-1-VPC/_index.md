@@ -1,72 +1,60 @@
 ---
-title : "Create a VPC"
+title : "Create VPC"
 date: 2025-07-01
 weight : 1
 chapter : false
 pre : " <b> 2.1 </b> "
 ---
+### 1.1. Create VPC
 
-#### Creating a VPC and Network Resources
-**Information** : Amazon Virtual Private Cloud (VPC) lets you launch AWS resources in a defined virtual network. This environment provides complete control over network configuration, including IP address ranges, subnets, routing tables, and gateways.
+1. **Access Amazon VPC Console**:
+- Open a browser and access: [https://console.aws.amazon.com/vpc/](https://console.aws.amazon.com/vpc/).
+- Select **Create VPC** > **VPC and more**.
 
-1. Create a VPC using the AWS Management Console
-Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+2. **VPC configuration**:
+- **Name tag auto-generation**: `spring-boot-vpc`.
+- **IPv4 CIDR block**: `10.0.0.0/16`.
+![image](../../../static/images/tao_vpc/screenshot_1752388342.png)
+- **Availability Zones (AZs)**: Select at least 2 AZs (e.g. `us-east-1a`, `us-east-1b`).
 
-2. In the VPC console, select Create VPC.
+- **Subnets**:
+- 2 public subnets (for EC2).
 
-3. In the Resources to create section, select VPC and more to create a VPC along with its associated resources.
+- 2 private subnets (for RDS).
 
-4. Configure basic options:
+- **NAT Gateways**: 1 per AZ (for private subnets to access the internet).
+   ![image](../../../static/images/tao_vpc/screenshot_1752388383.png)
+- **VPC endpoints**: None (or select **S3 Gateway** if needed).
 
-- Leave the Name tag auto-generation option selected to automatically generate labels for resources, or uncheck it to create your own.
+- **DNS options**: Enable **Enable DNS hostnames** and **Enable DNS resolution**.
+   ![image](../../../static/images/tao_vpc/screenshot_1752388459.png)
+   - Nhấn **Create VPC**.
+- Click **Create VPC**.
+   ![image](../../../static/images/tao_vpc/screenshot_1752388666.png)
+3. **Verify**:
 
-- Enter the IPv4 CIDR address range for the VPC (required).
+- Check in **VPC Console** to make sure the VPC `spring-boot-vpc` has been created with 4 subnets (2 public, 2 private) and related resources (Internet Gateway, Route Tables, NAT Gateways).
 
-- (Optional) To support IPv6, select IPv6 CIDR block, Amazon-provided IPv6 CIDR block.
+### 1.2. Configure Public Subnets
 
-- Select the Tenancy option that best suits your needs.
+1. **Access Subnets**:
 
-5. Configure Availability Zones (AZs):
+- In **Amazon VPC Console**, select **Subnets**.
 
-- For Number of Availability Zones, select at least two AZs for production environments.
+- Make sure the public subnets are named like: `spring-boot-vpc-public-us-east-1a`, `spring-boot-vpc-public-us-east-1b`.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752388960.png)
+2. **Enable Public IP**:
 
-- To specify specific AZs, expand Customize AZs.
+- Select each public subnet, click **Actions** > **Edit subnet settings**.
 
-6. Configure subnets:
+- Turn on **Enable auto-assign public IPv4 address**.
 
-- Select the number of public and private subnets required.
+- Click **Save**.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752388997.png)
+3. **Verify**:
 
-- To customize the CIDR range for subnets, expand Customize subnets CIDR blocks.
-
-7. Configure Internet Connections:
-
-- For NAT gateways, select the number of AZs to deploy NAT gateways.
-
-- For IPv6 connectivity, select Egress only internet gateway if needed.
-
-8. (Optional) To access Amazon S3 directly from VPC, select VPC endpoints, S3 Gateway.
-
-9. For DNS options, both domain name resolution options are enabled by default. Adjust as needed.
-
-10. (Optional) Add labels to the VPC by expanding Additional tags.
-
-11. Preview the VPC structure in the Preview panel:
-
-- Solid lines show the relationships between resources.
-
-- Dashed lines show network traffic flows.
-
-- When the configuration is complete, select Create VPC.
-
-#### Configure public IPv4 address for subnet
-ℹ️ **Information**: By default, non-default subnets have the auto-assign public IPv4 address property set to “false”, while default subnets have this property set to “true”. Non-default subnets created through EC2 instance creator will have this property set to “true”.
-
-**To change the public IPv4 address settings of a subnet:**
-
-1. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
-
-2. In the navigation pane, select **Subnets**.
-
-3. Select the subnet to configure, then select Actions, Edit subnet settings.
-
-4. Check or uncheck the Enable auto-assign public IPv4 address option as needed, then select Save.
+- Check that both public subnets have auto-assign Public IP enabled.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389021.png)
+4. **Repeat for the second public subnet.**
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389143.png)
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389179.png)

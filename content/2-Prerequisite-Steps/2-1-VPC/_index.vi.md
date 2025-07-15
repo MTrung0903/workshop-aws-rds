@@ -5,24 +5,46 @@ weight : 1
 chapter : false
 pre : " <b> 2.1 </b> "
 ---
- ### Tạo VPC
-1. Mở **Amazon VPC Console**: https://console.aws.amazon.com/vpc/.
-2. Chọn **Create VPC** > **VPC and more**.
-3. Cấu hình:
-    - **Name tag auto-generation**: `ecommerce-vpc`.
-    - **IPv4 CIDR block**: `10.0.0.0/16`.
-    - **Tenancy**: Default.
-    - **Availability Zones (AZs)**: Chọn 2 AZs (`us-east-1a`, `us-east-1b`).
-    - **Subnets**:
-        - 2 public subnets: `ecommerce-vpc-public-us-east-1a` (`10.0.1.0/24`), `ecommerce-vpc-public-us-east-1b` (`10.0.2.0/24`).
-        - 2 private subnets: `ecommerce-vpc-private-us-east-1a` (`10.0.3.0/24`), `ecommerce-vpc-private-us-east-1b` (`10.0.4.0/24`).
-    - **NAT Gateways**: 1 per AZ (2 tổng cộng).
-    - **DNS options**: Kích hoạt **DNS hostnames** và **DNS resolution**.
-4. Chọn **Create VPC**.
+### 1.1. Tạo VPC
 
-###  Cấu hình Địa chỉ IPv4 Công khai cho Subnet
+1. **Truy cập Amazon VPC Console**:
+   - Mở trình duyệt và truy cập: [https://console.aws.amazon.com/vpc/](https://console.aws.amazon.com/vpc/).
+   - Chọn **Create VPC** > **VPC and more**.
+   ![image](../../../static/images/tao_vpc/screenshot_1752387940.png)
+2. **Cấu hình VPC**:
+   - **Name tag auto-generation**: `spring-boot-vpc`.
+   - **IPv4 CIDR block**: `10.0.0.0/16`.
+   ![image](../../../static/images/tao_vpc/screenshot_1752388342.png)
+   - **Availability Zones (AZs)**: Chọn ít nhất 2 AZs (ví dụ: `us-east-1a`, `us-east-1b`).
+   - **Subnets**: 
+     - 2 public subnets (cho EC2).
+     - 2 private subnets (cho RDS).
+   - **NAT Gateways**: 1 per AZ (để private subnets truy cập internet).
+   ![image](../../../static/images/tao_vpc/screenshot_1752388383.png)
+   - **VPC endpoints**: None (hoặc chọn **S3 Gateway** nếu cần).
+   - **DNS options**: Bật **Enable DNS hostnames** và **Enable DNS resolution**.
+   ![image](../../../static/images/tao_vpc/screenshot_1752388459.png)
+   - Nhấn **Create VPC**.
+   ![image](../../../static/images/tao_vpc/screenshot_1752388666.png)
 
-1. Mở **VPC Console** > **Subnets**.
-2. Chọn public subnet (ví dụ: `ecommerce-vpc-public-us-east-1a`).
-3. Chọn **Actions** > **Edit subnet settings**.
-4. Đánh dấu **Enable auto-assign public IPv4 address** > **Save**.
+3. **Xác minh**:
+   - Kiểm tra trong **VPC Console** để đảm bảo VPC `spring-boot-vpc` đã được tạo với 4 subnets (2 public, 2 private) và các tài nguyên liên quan (Internet Gateway, Route Tables, NAT Gateways).
+
+### 1.2. Cấu hình Public Subnets
+
+1. **Truy cập Subnets**:
+   - Trong **Amazon VPC Console**, chọn **Subnets**.
+   - Đảm bảo các public subnets được đặt tên như: `spring-boot-vpc-public-us-east-1a`, `spring-boot-vpc-public-us-east-1b`.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752388960.png)
+2. **Bật Public IP**:
+   - Chọn từng public subnet, nhấn **Actions** > **Edit subnet settings**.
+   - Bật **Enable auto-assign public IPv4 address**.
+   - Nhấn **Save**.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752388997.png)
+
+3. **Xác minh**:
+   - Kiểm tra cả hai public subnets đã bật auto-assign Public IP.
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389021.png)
+4. **Lặp lại cho public subnet thứ hai.**
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389143.png)
+   ![image](../../../static/images/cau_hinh_public_subnets/screenshot_1752389179.png)

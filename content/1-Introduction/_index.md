@@ -5,13 +5,34 @@ weight : 1
 chapter : false
 pre : " <b> 1. </b> "
 ---
+# How to deploy Spring Boot applications on AWS with Docker
 
-The **"AWS Cloud Deployment with Spring Boot and Docker"** workshop provides a hands-on guide to deploying a Spring Boot application, packaged as a Docker image, on Amazon Web Services (AWS) while connecting it to a relational database service (RDS) with MySQL. This workshop aims to equip participants with practical skills in cloud-native application deployment, a critical competency in modern software development. Spring Boot, with its robust integration of Spring Data JPA and the portability of Docker, enables rapid deployment and scalability, while AWS offers a reliable cloud infrastructure with automation and security features. Adapted from the original "workshop aws-rds.txt" documentation, this guide replaces a Node.js application with Spring Boot and integrates database connectivity using custom environment variables (DBMS_*) or standard Spring Boot variables (SPRING_DATASOURCE_*).
+ℹ️ **Information**: This document guides you through deploying a Spring Boot application (Backend) on Docker, using AWS services such as EC2, RDS, and ECR, integrating Nginx as a reverse proxy. The guide is updated with the latest AWS features (as of 2025) and optimized for production environments.
 
-This workshop is designed for beginners exploring AWS and developers seeking to optimize CI/CD (Continuous Integration/Continuous Deployment) pipelines using Docker and cloud computing. By the end, you will understand how to set up a secure network infrastructure (VPC), deploy a Spring Boot application, and manage cloud resources efficiently. These skills are applicable to real-world projects such as building APIs, user management systems, or enterprise applications, making this a valuable step toward mastering cloud-based development.
+## Objectives
 
-##### Objectives
-- Deploy a Spring Boot application from a Docker image on Docker Hub to an Amazon EC2 instance.
-- Connect the application to an RDS MySQL database (database database-workshop).
-- Ensure security, high availability (Multi-AZ), and a streamlined process for cleaning up resources after completion.
+- Deploy a Spring Boot application from a Docker image on Amazon ECR.
+- Use Nginx as a reverse proxy to route traffic to the Backend.
 
+- Connect the application to a MySQL database on Amazon RDS.
+- Ensure security, high availability (Multi-AZ), and easy resource cleaning.
+
+## Main content
+
+1. Prepare the infrastructure
+
+2. Create and push the image to Amazon ECR
+3. Create an EC2 Instance
+
+4. Install Docker, Nginx, and MySQL Client on EC2
+5. Create an RDS Database Instance
+
+6. Deploy Spring Boot application with Docker Compose
+7. Test the application
+8. Clean up resources
+
+💡 **Helpful tip**: Use **Amazon ECS** or **EKS** instead of running Docker directly on EC2 to manage containers more efficiently in production environments.
+
+🔒 **Security note**: Ensure proper Security Groups and VPC configuration, restrict access, and use AWS Secrets Manager to manage sensitive information.
+
+⚠️ **Warning**: Monitor AWS costs via **AWS Cost Explorer** and clean up resources after completion to avoid unnecessary costs.

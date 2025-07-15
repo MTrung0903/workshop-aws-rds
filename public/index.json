@@ -1,0 +1,113 @@
+[
+{
+	"uri": "//localhost:1313/",
+	"title": " How to Deploy a Spring Boot Application on AWS with Docker",
+	"tags": [],
+	"description": "",
+	"content": "How to Deploy a Spring Boot Application on AWS with Docker General information This document guides you through deploying a Spring Boot application (backend API) using Docker on Amazon EC2, integrating with Amazon ECR for Docker image storage, Amazon RDS for MySQL database, and Nginx as a reverse proxy. The guide is updated with the latest AWS features (as of July 2025) and optimized for production environments, while leveraging the AWS Free Tier to minimize costs.\nObjectives Create and push a Docker image of a Spring Boot application to Amazon ECR. Deploy the application on Amazon EC2 using Docker Compose. Use Nginx as a reverse proxy to route traffic from port 80 to Spring Boot on port 8080. Connect the application to a MySQL database on Amazon RDS (database first_cloud_users). Ensure security, high availability (Multi-AZ), and easy resource cleanup. Assumptions You already have a Spring Boot Docker image (e.g. trungho93/identity-service:0.9.0) that has been tested to work well on your local environment or Docker Hub. The Spring Boot application has the database configuration in the application.yml or application.properties file as follows: spring: datasource: url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3306/first_cloud_users?useSSL=false\u0026amp;serverTimezone=UTC} driverClassName: com.mysql.cj.jdbc.Driver username: ${DBMS_USERNAME:root} password: ${DBMS_PASSWORD:09032003} jpa: hibernate: ddl-auto: update The application uses port 8080 (Spring Boot default).\nYou have access to:\nAWS Management Console.\nAWS CLI (version 2.x).\nDocker CLI (latest version).\nSSH key pair (.pem file) to access EC2.\nLocal machine with root or sudo privileges to install tools.\nYou have installed MobaXterm to SSH into EC2.\nMain content Prepare infrastructure (VPC, Security Groups, IAM Role, DB Subnet Group).\nCreate and push Docker image to Amazon ECR.\nCreate EC2 instance.\nInstall Docker, Nginx, and MySQL Client on EC2.\nCreate RDS database instance.\nDeploy application with Docker Compose.\nTest application.\nClean up resources.\nImportant notes Helpful tip: Consider using Amazon ECS or EKS to manage containers in production, instead of running directly on EC2.\nSecurity: Configure Security Groups and VPCs properly, use AWS Secrets Manager to manage sensitive information.\nCost: Track costs via AWS Cost Explorer and clean up resources after the workshop to avoid additional costs.\n"
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/2-1-vpc/",
+	"title": "Create VPC",
+	"tags": [],
+	"description": "",
+	"content": "1.1. Create VPC Access Amazon VPC Console: Open a browser and access: https://console.aws.amazon.com/vpc/. Select Create VPC \u0026gt; VPC and more. VPC configuration: Name tag auto-generation: spring-boot-vpc.\nIPv4 CIDR block: 10.0.0.0/16. Availability Zones (AZs): Select at least 2 AZs (e.g. us-east-1a, us-east-1b).\nSubnets:\n2 public subnets (for EC2).\n2 private subnets (for RDS).\nNAT Gateways: 1 per AZ (for private subnets to access the internet). VPC endpoints: None (or select S3 Gateway if needed).\nDNS options: Enable Enable DNS hostnames and Enable DNS resolution. Nhấn Create VPC. Click Create VPC. Verify: Check in VPC Console to make sure the VPC spring-boot-vpc has been created with 4 subnets (2 public, 2 private) and related resources (Internet Gateway, Route Tables, NAT Gateways). 1.2. Configure Public Subnets Access Subnets: In Amazon VPC Console, select Subnets.\nMake sure the public subnets are named like: spring-boot-vpc-public-us-east-1a, spring-boot-vpc-public-us-east-1b. Enable Public IP: Select each public subnet, click Actions \u0026gt; Edit subnet settings.\nTurn on Enable auto-assign public IPv4 address.\nClick Save. Verify: Check that both public subnets have auto-assign Public IP enabled. Repeat for the second public subnet. "
+},
+{
+	"uri": "//localhost:1313/1-introduction/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "How to deploy Spring Boot applications on AWS with Docker ℹ️ Information: This document guides you through deploying a Spring Boot application (Backend) on Docker, using AWS services such as EC2, RDS, and ECR, integrating Nginx as a reverse proxy. The guide is updated with the latest AWS features (as of 2025) and optimized for production environments.\nObjectives Deploy a Spring Boot application from a Docker image on Amazon ECR.\nUse Nginx as a reverse proxy to route traffic to the Backend.\nConnect the application to a MySQL database on Amazon RDS.\nEnsure security, high availability (Multi-AZ), and easy resource cleaning.\nMain content Prepare the infrastructure\nCreate and push the image to Amazon ECR\nCreate an EC2 Instance\nInstall Docker, Nginx, and MySQL Client on EC2\nCreate an RDS Database Instance\nDeploy Spring Boot application with Docker Compose\nTest the application\nClean up resources\n💡 Helpful tip: Use Amazon ECS or EKS instead of running Docker directly on EC2 to manage containers more efficiently in production environments.\n🔒 Security note: Ensure proper Security Groups and VPC configuration, restrict access, and use AWS Secrets Manager to manage sensitive information.\n⚠️ Warning: Monitor AWS costs via AWS Cost Explorer and clean up resources after completion to avoid unnecessary costs.\n"
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/2-2-security-group/",
+	"title": "Create Security Group",
+	"tags": [],
+	"description": "",
+	"content": "1.3. Create Security Groups Security Group for EC2 Access Amazon EC2 Console: Open: https://console.aws.amazon.com/ec2/.\nSelect Security Groups \u0026gt; Create Security Group. Configure Security Group: Name: ec2-sg.\nDescription: \u0026ldquo;Security Group for EC2 running Spring Boot and Nginx\u0026rdquo;.\nVPC: Select spring-boot-vpc. Inbound Rules:\nHTTP (80): Source 0.0.0.0/0 (allow all to access via Nginx).\nHTTPS (443): Source 0.0.0.0/0 (for production environment).\nCustom TCP (8080): Source 0.0.0.0/0 (for testing only, limited from Nginx in production).\nSSH (22): Source \u0026lt;your-ip\u0026gt;/32 (replace \u0026lt;your-ip\u0026gt; with your IP address, e.g. 203.0.113.1/32). Outbound Rules: Default (allow all).\nClick Create security group. Verify: Check the Security Group ec2-sg in EC2 Console to make sure the rules are applied correctly. Security Group for RDS Go to Amazon VPC Console: Select Security Groups \u0026gt; Create security group. Configure Security Group: Name: rds-sg.\nDescription: \u0026ldquo;Security Group for RDS MySQL\u0026rdquo;.\nVPC: Select spring-boot-vpc.\nInbound Rule:\nType: MySQL/Aurora.\nPort: 3306.\nSource: Select Security Group ec2-sg (allow EC2 to access RDS). Outbound Rules: Default (allow all).\nClick Create security group. Verification: Check Security Group rds-sg to ensure only connections from ec2-sg are allowed on port 3306. "
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/",
+	"title": "Preparation Steps",
+	"tags": [],
+	"description": "",
+	"content": "Preparation Steps Information: Before deploying Amazon RDS, you need to set up the appropriate network and security environment. The following steps will help you prepare the necessary infrastructure.\nCreate a VPC - A separate virtual network environment for your AWS resources Create a subnet - Segment the network within the VPC for a multi-AZ deployment Create a Security Group for Amazon EC2 - Control network traffic to and from the application server Create a Security Group for a DB instance - Control network access to the RDS database Create a DB Subnet group - Define the subnets that Amazon RDS can use in your VPC "
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/2-3-db-subnet/",
+	"title": "Create DB Subnet Group",
+	"tags": [],
+	"description": "",
+	"content": "1.4. Create DB Subnet Group Go to Amazon RDS Console: Open: https://console.aws.amazon.com/rds/. Select Subnet groups \u0026gt; Create DB Subnet Group. Configure DB Subnet Group: Name: rds-subnet-group. Description: \u0026ldquo;DB Subnet Group for Spring Boot\u0026rdquo;. VPC: Select spring-boot-vpc. Add subnets: Select 2 private subnets (eg: spring-boot-vpc-private-us-east-1a, spring-boot-vpc-private-us-east-1b). Click Create. Verify: Check in RDS Console to make sure rds-subnet-group has been created with 2 private subnets. "
+},
+{
+	"uri": "//localhost:1313/3-create-ecr/",
+	"title": "Create ECR Repository",
+	"tags": [],
+	"description": "",
+	"content": "2.1. Create ECR Repository Access Amazon ECR Console: Open: https://console.aws.amazon.com/ecr/.\nSelect Create repository.\nConfigure Repository: Repository name: spring-boot-app.\nTag immutability: Select Mutable.\nScan on push: Enable to scan for security vulnerabilities.\nClick Create repository.\nSave URI: Note down the repository URI, e.g. \u0026lt;account-id\u0026gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app. 2.2. Push Docker image to ECR Ensure local Docker image: Verify local Spring Boot image (e.g. trungho93/identity-service:0.9.0): docker images Log in to ECR: Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin \u0026lt;account-id\u0026gt;.dkr.ecr.us-east-1.amazonaws.com Replace \u0026lt;account-id\u0026gt; with your AWS account ID (e.g. 238702553701).\nOutput: Login Succeeded.\nTag and push image: Tag images: docker tag trungho93/identity-service:0.9.0 \u0026lt;account-id\u0026gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest Push images: docker push \u0026lt;account-id\u0026gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest Verification: Access ECR Console, select repository spring-boot-app, check image with tag latest. "
+},
+{
+	"uri": "//localhost:1313/4-create-ec2/",
+	"title": "Create EC2",
+	"tags": [],
+	"description": "",
+	"content": "3. Create EC2 Instance Access Amazon EC2 Console: Open: https://console.aws.amazon.com/ec2/. Select Launch instance. EC2 configuration: Name: spring-boot-ec2.\nOS Image: Select Ubuntu Server 24.04 LTS.\nInstance type: t3.medium (2 vCPU, 4 GB RAM, Free Tier eligible).\nKey pair: Create a new one (spring-boot-key) or select an existing .pem key pair.\nNetwork settings:\nVPC: Select spring-boot-vpc.\nSubnet: Select public subnet (eg: spring-boot-vpc-public-us-east-1a).\nAuto-assign public IP: Turn on Enable.\nSecurity Group: Select ec2-sg.\nClick Launch instance.\nAssign IAM Role: In EC2 Console, select the spring-boot-ec2 instance.\nClick Actions \u0026gt; Security \u0026gt; Modify IAM role.\nSelect the CustomRWECRRole role.\nClick Update IAM role.\nVerification: Check the spring-boot-ec2 instance is in Running state and has Public IP. 4. Connect SSH to EC2 Instance using MobaXterm 4.1. Install MobaXterm Download MobaXterm: Visit: https://mobaxterm.mobatek.net/. Download and install the latest version (Portable or Installer). 4.2. Create SSH session Open MobaXterm, click Session \u0026gt; SSH.\nConfiguration:\nRemote host: Enter the Public IP or Public DNS of EC2 (for example: ec2-54-123-45-67.compute-1.amazonaws.com). Specify username: Enter ubuntu (for Ubuntu AMI). Use private key: In Advanced SSH settings, enable Use private key, select the .pem file (e.g. spring-boot-key.pem). Click OK to connect. 4.3. Verify connection If the connection is successful, you will see the EC2 terminal in MobaXterm.\nTest:\nwhoami Result: ubuntu.\n5. Install Docker, Nginx, and MySQL Client on EC2 SSH into EC2: Use MobaXterm to connect to EC2. Install Docker: Run: sudo apt update -y sudo apt upgrade -y sudo apt install -y ca-certificates curl sudo install -m 0755 -d /etc/apt/keyrings sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc sudo chmod a+r /etc/apt/keyrings/docker.asc echo \\ \u0026#34;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \\ $(. /etc/os-release \u0026amp;\u0026amp; echo \u0026#34;$VERSION_CODENAME\u0026#34;) stable\u0026#34; | \\ sudo tee /etc/apt/sources.list.d/docker.list \u0026gt; /dev/null sudo apt update sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin sudo usermod -aG docker ubuntu Log out and log back in to SSH: exit Reconnect via MobaXterm.\nCheck Docker: docker --version Install Nginx: Run: sudo apt install -y nginx sudo systemctl start nginx sudo systemctl enable nginx Check status: sudo systemctl status nginx Install MySQL Client: Run: sudo apt install -y mysql-client Check: mysql --version Install AWS CLI on EC2: Run: sudo apt update sudo apt install -y unzip curl \u0026#34;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\u0026#34; -o \u0026#34;awscliv2.zip\u0026#34; unzip awscliv2.zip sudo ./aws/install Check: aws --version "
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/2-4-create-iam/",
+	"title": "Create IAM Role for ECR",
+	"tags": [],
+	"description": "",
+	"content": "1.5. Create IAM Role for ECR Access IAM Console: Open: https://console.aws.amazon.com/iam/. Create an ECR Reading Policy: Select Policies \u0026gt; Create Policy. Select the Elastic Container Registry service. Permissions: List: DescribeImages, ListImages. Read: BatchGetImage, DescribeRepositories, GetAuthorizationToken, GetAccountSetting. Resources: Select Any in this account. Policy name: ReadECRRepositoryContent. Description: \u0026ldquo;Allow pulling images and viewing repository information\u0026rdquo;. Click Create policy. Create ECR Record Policy: Similarly, select Elastic Container Registry. Permissions: Read: BatchCheckLayerAvailability, GetAuthorizationToken. Write: CompleteLayerUpload, InitiateLayerUpload, PutImage, UploadLayerPart. Resources: Select Any in this account. Policy name: WriteECRRepositoryContent. Description: \u0026ldquo;Allow pushing and deleting images\u0026rdquo;. Click Create policy. Create IAM Role: Select Roles \u0026gt; Create role \u0026gt; AWS service \u0026gt; EC2. Attach 2 policies: ReadECRRepositoryContent, WriteECRRepositoryContent. Role name: CustomRWECRRole. Description: \u0026ldquo;Role allows reading and writing ECR\u0026rdquo;. Click Create role. Verify: Check in IAM Console to make sure the CustomRWECRRole role has been created and the correct policies have been attached. "
+},
+{
+	"uri": "//localhost:1313/5-create-rds-database/",
+	"title": "Create RDS database",
+	"tags": [],
+	"description": "",
+	"content": "6. Create RDS Database Instance Access Amazon RDS Console: Open: https://console.aws.amazon.com/rds/.\nSelect Create database.\nRDS configuration: Method: Standard create.\nEngine: MySQL.\nVersion: MySQL 8.0 (latest).\nTemplate: Dev/Test.\nMulti-AZ: DB instance (for high availability).\nDB instance identifier: spring-boot-rds.\nMaster username: admin.\nMaster password: Enter a secure password (eg: SecurePass123!) or select auto-generate.\nInstance class: db.t3.micro (Free Tier eligible).\nStorage: 20 GB, General Purpose SSD.\nVPC: Select spring-boot-vpc.\nDB Subnet Group: Select rds-subnet-group.\nSecurity Group: Select rds-sg.\nClick Create database.\nSave RDS information: Note:\nEndpoint: Example spring-boot-rds.cghg6wmuybac.us-east-1.rds.amazonaws.com.\nPort: 3306.\nUsername: admin.\nPassword: The password you set.\nTest RDS connection from EC2: In MobaXterm, run: mysql -h spring-boot-rds.cghg6wmuybac.us-east-1.rds.amazonaws.com -u admin -p Enter the RDS password. Create and check the database: SHOW DATABASES; CREATE DATABASE first_cloud_users; USE first_cloud_users; "
+},
+{
+	"uri": "//localhost:1313/2-prerequisite-steps/2-5-install-acli/",
+	"title": "Install AWS CLI on Local Machine",
+	"tags": [],
+	"description": "",
+	"content": "1.6. Install AWS CLI on Local Machine Download the installation file: Go to: https://awscli.amazonaws.com/AWSCLIV2.msi.\nDownload the AWSCLIV2.msi file (for Windows) to the default folder (eg: C:\\Users\\\u0026lt;YourUser\u0026gt;\\Downloads).\nRun the installer: Find the AWSCLIV2.msi file, double-click to run.\nFollow the instructions:\nClick Next to continue.\nAccept the License Agreement and click Next.\nKeep the default installation directory (C:\\Program Files\\Amazon\\AWSCLIV2) and click Next.\nClick Install, grant Administrator rights if requested.\nClick Finish to complete.\nTest the installation: Open Command Prompt or PowerShell (Win + R, type cmd or powershell).\nRun:\naws --version Example output: aws-cli/2.27.50 Python/3.13.4 Windows/11 exe/AMD64. If the error aws is not recognized appears, check the PATH variable:\nPress Win + R, type sysdm.cpl, go to the Advanced tab \u0026gt; Environment Variables.\nIn System Variables, find Path, add C:\\Program Files\\Amazon\\AWSCLIV2 if it is not there.\nReopen Command Prompt/PowerShell and try again.\nAWS CLI Configuration: Run: aws configure Enter information:\nAWS Access Key ID: Get from AWS Management Console:\nLog in: https://console.aws.amazon.com/iam/. Go to Users \u0026gt; Select IAM user \u0026gt; Security credentials \u0026gt; Create access key. Select Command Line Interface (CLI), load the CSV file containing the Access Key ID and Secret Access Key. AWS Secret Access Key: Import from CSV file. Default region name: Enter us-east-1 (or the region of your choice).\nDefault output format: Enter json or press Enter to use the default.\nThe information is saved to:\nC:\\Users\\\u0026lt;YourUser\u0026gt;\\.aws\\credentials\nC:\\Users\\\u0026lt;YourUser\u0026gt;\\.aws\\config\n"
+},
+{
+	"uri": "//localhost:1313/6-deploy-with-docker-compose/",
+	"title": "Deploying Spring Boot Applications with Docker Compose",
+	"tags": [],
+	"description": "",
+	"content": "7. Deploying Spring Boot Applications with Docker Compose 7.1. Logging in to Amazon ECR from EC2 In the MobaXterm terminal, run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin \u0026lt;account-id\u0026gt;.dkr.ecr.us-east-1.amazonaws.com Replace \u0026lt;account-id\u0026gt; with your AWS account ID. Output: Login Succeeded. 7.2. Create Docker Compose file Create directory: In EC2 terminal: mkdir spring-boot-app \u0026amp;\u0026amp; cd spring-boot-app Create docker-compose.yml file: Run:\nnano docker-compose.yml Paste the following content, replacing the values \u0026lt;account-id\u0026gt;, \u0026lt;region\u0026gt;, \u0026lt;RDS Endpoint\u0026gt;, and \u0026lt;RDS Password\u0026gt;: version: \u0026#39;3.8\u0026#39; services: nginx: image: nginx:latest ports: - \u0026#34;80:80\u0026#34; volumes: - ./nginx.conf:/etc/nginx/conf.d/app.conf depends_on: - backend networks: - app-network backend: image: \u0026lt;account-id\u0026gt;.dkr.ecr.\u0026lt;region\u0026gt;.amazonaws.com/spring-boot-app:latest ports: - \u0026#34;8080:8080\u0026#34; environment: - SPRING_DATASOURCE_URL=jdbc:mysql://\u0026lt;RDS Endpoint\u0026gt;:3306/first_cloud_users?useSSL=false\u0026amp;serverTimezone=UTC - SPRING_DATASOURCE_USERNAME=admin - SPRING_DATASOURCE_PASSWORD=\u0026lt;RDS Password\u0026gt; - SPRING_JPA_HIBERNATE_DDL_AUTO=update networks: - app-network networks: app-network: driver: bridge Save file: Press Ctrl+O, Enter, Ctrl+X. 7.3. Create Nginx configuration file Create file nginx.conf: Run: nano nginx.conf Paste content: server { listen 80; server_name _; location / { proxy_pass http://backend:8080; proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme; } } Save file: Press Ctrl+O, Enter, Ctrl+X. 7.4. Run Docker Compose Check the configuration files: Make sure docker-compose.yml and nginx.conf are created in the spring-boot-app directory. Run the container: Run: sudo docker compose -f docker-compose.yml up -d Verify: Check the container: docker ps You should see 2 containers: nginx and backend. "
+},
+{
+	"uri": "//localhost:1313/7-application-check/",
+	"title": "Test the application",
+	"tags": [],
+	"description": "",
+	"content": "8. Test the application Access the application: Open a browser or Postman, access: http://\u0026lt;EC2-Public-IP\u0026gt;/api/\u0026lt;endpoint\u0026gt; For example: If Spring Boot has an endpoint /api/users, access http://\u0026lt;EC2-Public-IP\u0026gt;/api/users.\nCheck logs for errors: Spring Boot container log: sudo docker logs \u0026lt;container-id-backend\u0026gt; Replace \u0026lt;container-id-backend\u0026gt; with the ID of the backend container (taken from docker ps).\nNginx log: sudo tail -f /var/log/nginx/error.log Check RDS connection: In EC2 terminal: mysql -h \u0026lt;RDS Endpoint\u0026gt; -u admin -p Enter RDS password. Check data: USE first_cloud_users; SHOW TABLES; SELECT * FROM users; Troubleshooting: RDS connection error: Check Security Group rds-sg allows ec2-sg on port 3306.\nAPI error: Check container log and make sure SPRING_DATASOURCE_URL is correct.\nNginx error: Check nginx.conf and log /var/log/nginx/error.log.\n"
+},
+{
+	"uri": "//localhost:1313/8-clean-resources/",
+	"title": "Clean up resources",
+	"tags": [],
+	"description": "",
+	"content": "9. Clean up resources To avoid incurring costs:\nStop and delete the container: In the EC2 terminal: cd spring-boot-app sudo docker compose -f docker-compose.yml down Delete the ECR Repository: Go to ECR Console, select spring-boot-app \u0026gt; Delete. Delete the EC2 Instance: Go to EC2 Console, select spring-boot-ec2 \u0026gt; Actions \u0026gt; Instance State \u0026gt; Terminate instance. Delete RDS Instance: Go to RDS Console, select spring-boot-rds \u0026gt; Actions \u0026gt; Delete, enter delete me. Delete Security Groups: Go to VPC Console, select ec2-sg and rds-sg \u0026gt; Actions \u0026gt; Delete security group. Delete IAM Role: Go to IAM Console, select CustomRWECRRole \u0026gt; Delete. Delete VPC: Go to VPC Console, select spring-boot-vpc \u0026gt; Actions \u0026gt; Delete VPC, make sure to delete all dependent resources. "
+},
+{
+	"uri": "//localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

@@ -6,43 +6,48 @@ chapter : false
 pre : " <b> 2.2 </b> "
 ---
 
-#### **Security Group cho ALB**:
+### 1.3. Tạo Security Groups
 
-1. Mở **EC2 Console** > **Security Groups** > **Create Security Group**.
-2. Cấu hình:
-    - **Name**: `ecommerce-alb-sg`.
-    - **Description**: "Security Group for ALB of E-commerce Identity Service".
-    - **VPC**: `ecommerce-vpc`.
-3. **Inbound rules**:
-    - HTTP (80): Source `0.0.0.0/0`.
-    - HTTPS (443): Source `0.0.0.0/0`.
-4. **Outbound rules**: Mặc định (cho phép tất cả).
-5. Chọn **Create security group**.
+#### Security Group cho EC2
 
-#### **Security Group cho EC2**:
+1. **Truy cập Amazon EC2 Console**:
+   - Mở: [https://console.aws.amazon.com/ec2/](https://console.aws.amazon.com/ec2/).
+   - Chọn **Security Groups** > **Create Security Group**.
+   ![image](../../../static/images/tao_sg_ec2/screenshot_1752389310.png)
+2. **Cấu hình Security Group**:
+   - **Name**: `ec2-sg`.
+   - **Description**: "Security Group cho EC2 chạy Spring Boot và Nginx".
+   - **VPC**: Chọn `spring-boot-vpc`.
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752389486.png)
+   - **Inbound Rules**:
+     - **HTTP (80)**: Source `0.0.0.0/0` (cho phép tất cả để truy cập qua Nginx).
+     - **HTTPS (443)**: Source `0.0.0.0/0` (cho môi trường sản xuất).
+     - **Custom TCP (8080)**: Source `0.0.0.0/0` (chỉ để thử nghiệm, giới hạn từ Nginx trong sản xuất).
+     - **SSH (22)**: Source `<your-ip>/32` (thay `<your-ip>` bằng địa chỉ IP của bạn, ví dụ: `203.0.113.1/32`).
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752389534.png)
+   - **Outbound Rules**: Mặc định (cho phép tất cả).
+   - Nhấn **Create security group**.
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752389562.png)
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752389644.png)
+3. **Xác minh**:
+   - Kiểm tra Security Group `ec2-sg` trong **EC2 Console** để đảm bảo các quy tắc đã được áp dụng đúng.
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752401505.png)
 
-1. Tạo Security Group:
-    - **Name**: `ecommerce-ec2-sg`.
-    - **Description**: "Security Group for EC2 hosting Spring Boot app".
-    - **VPC**: `ecommerce-vpc`.
-2. **Inbound rules**:
-    - Custom TCP (8080): Source `ecommerce-alb-sg` (Security Group ID của ALB).
-    - SSH (22): Source `<your-ip>/32` (ví dụ: `203.0.113.1/32`, kiểm tra IP của bạn tại [https://whatismyipaddress.com](https://whatismyipaddress.com/)).
-3. **Outbound rules**: Mặc định.
-4. Chọn **Create security group**.
+#### Security Group cho RDS
 
-#### **Security Group cho RDS**:
-
-1. Tạo Security Group:
-    - **Name**: `ecommerce-rds-sg`.
-    - **Description**: "Security Group for RDS MySQL".
-    - **VPC**: `ecommerce-vpc`.
-2. **Inbound rule**:
-    - MySQL/Aurora (3306): Source `ecommerce-ec2-sg`.
-3. **Outbound rules**: Mặc định.
-4. Chọn **Create security group**.
-
-**⚠️ Lưu ý Bảo mật**:
-
-- Hạn chế truy cập SSH chỉ từ IP của bạn.
-- Chỉ cho phép ALB truy cập EC2 (cổng 8080) và EC2 truy cập RDS (cổng 3306) [AWS Well-Architected Framework, Security Pillar].
+1. **Truy cập Amazon VPC Console**:
+   - Chọn **Security Groups** > **Create security group**.
+2. **Cấu hình Security Group**:
+   - **Name**: `rds-sg`.
+   - **Description**: "Security Group cho RDS MySQL".
+   - **VPC**: Chọn `spring-boot-vpc`.
+   - **Inbound Rule**:
+     - **Type**: MySQL/Aurora.
+     - **Port**: 3306.
+     - **Source**: Chọn Security Group `ec2-sg` (cho phép EC2 truy cập RDS).
+![image](../../../static/images/tao_sg_rds/screenshot_1752389783.png)
+   - **Outbound Rules**: Mặc định (cho phép tất cả).
+   - Nhấn **Create security group**.
+![image](../../../static/images/tao_sg_rds/screenshot_1752389842.png)
+3. **Xác minh**:
+   - Kiểm tra Security Group `rds-sg` để đảm bảo chỉ cho phép kết nối từ `ec2-sg` trên cổng 3306.

@@ -6,37 +6,60 @@ chapter : false
 pre : " <b> 2.2 </b> "
 ---
 
-#### Creating a Security Group for Amazon EC2
-**Information**: Security Groups act as virtual firewalls to control traffic in and out of your AWS resources. Each Security Group contains a set of rules that allow network traffic to the associated resources.
+### 1.3. Create Security Groups
 
-##### Steps to create a Security Group for EC2
+#### Security Group for EC2
 
-1. Sign in to the AWS Management Console.
+1. **Access Amazon EC2 Console**:
 
-2. In the service menu, select **EC2 under **Compute**.
+- Open: [https://console.aws.amazon.com/ec2/](https://console.aws.amazon.com/ec2/).
 
-3. In the left navigation bar, under **Network & Security**, select **Security Groups**.
+- Select **Security Groups** > **Create Security Group**.
+   ![image](../../../static/images/tao_sg_ec2/screenshot_1752389310.png)
+2. **Configure Security Group**:
 
-4. Click the **Create Security Group** button to begin the creation process.
+- **Name**: `ec2-sg`.
 
-5. In the Basic details section, enter the basic information:
-- Security group name: Enter a descriptive name for the Security Group
-- Description: Add a detailed description of the purpose of the Security Group
-- VPC: Select the VPC where you want to apply this Security Group
+- **Description**: "Security Group for EC2 running Spring Boot and Nginx".
 
-6. In the Inbound rules section, add the following rules to allow incoming traffic:
-- HTTP (80): Allow standard HTTP web traffic
-- HTTPS (443): Allow HTTPS secure web traffic
-- Custom TCP (8080): Allow traffic to application port 8080
-- SSH (22): Allow SSH connections for server administration
-🔒 **Security Note:** For production environments, it is recommended to limit SSH access to only trusted IP addresses instead of opening it to everyone (0.0.0.0/0).
+- **VPC**: Select `spring-boot-vpc`.
+      ![image](../../../static/images/tao_sg_ec2/screenshot_1752389486.png)
+- **Inbound Rules**:
+- **HTTP (80)**: Source `0.0.0.0/0` (allow all to access via Nginx).
+- **HTTPS (443)**: Source `0.0.0.0/0` (for production environment).
+- **Custom TCP (8080)**: Source `0.0.0.0/0` (for testing only, limited from Nginx in production).
+- **SSH (22)**: Source `<your-ip>/32` (replace `<your-ip>` with your IP address, e.g. `203.0.113.1/32`).
+![image](../../../static/images/tao_sg_ec2/screenshot_1752389534.png)
+- **Outbound Rules**: Default (allow all).
+- Click **Create security group**.
+    ![image](../../../static/images/tao_sg_ec2/screenshot_1752389562.png)
+    ![image](../../../static/images/tao_sg_ec2/screenshot_1752389644.png)
+3. **Verify**:
 
-7. (Optional) Configure **Outbound rules** if you need to limit outbound traffic. By default, all outbound traffic is allowed.
+- Check the Security Group `ec2-sg` in **EC2 Console** to make sure the rules are applied correctly.
+    ![image](../../../static/images/tao_sg_ec2/screenshot_1752401505.png)
 
-8. (Optional) Add tags to easily manage and categorize your Security Group.
+#### Security Group for RDS
 
-9. Once the configuration is complete, click the **Create security group** button.
+1. **Go to Amazon VPC Console**:
+- Select **Security Groups** > **Create security group**.
+2. **Configure Security Group**:
+- **Name**: `rds-sg`.
+- **Description**: "Security Group for RDS MySQL".
 
-The new Security Group has been created and is ready to be assigned to your EC2 instances.
+- **VPC**: Select `spring-boot-vpc`.
 
-Security Group Created
+- **Inbound Rule**:
+- **Type**: MySQL/Aurora.
+
+- **Port**: 3306.
+
+- **Source**: Select Security Group `ec2-sg` (allow EC2 to access RDS).
+![image](../../../static/images/tao_sg_rds/screenshot_1752389783.png)
+
+- **Outbound Rules**: Default (allow all).
+
+- Click **Create security group**.
+![image](../../../static/images/tao_sg_rds/screenshot_1752389842.png)
+3. **Verification**:
+- Check Security Group `rds-sg` to ensure only connections from `ec2-sg` are allowed on port 3306.
