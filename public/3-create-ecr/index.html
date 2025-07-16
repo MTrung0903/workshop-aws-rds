@@ -12,21 +12,21 @@
     <title>Create ECR Repository :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752606923" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752606923" rel="stylesheet">
+    <link href="/css/hybrid.css?1752606923" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752606923" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752606923" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752606923" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752606923" rel="stylesheet">
+    <link href="/css/theme.css?1752606923" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752606923" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752606923" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752606923"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752606923"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752606923"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752606923"></script>
 
     
   </div>
@@ -626,7 +626,8 @@
 <p>Open: <a href="https://console.aws.amazon.com/ecr/">https://console.aws.amazon.com/ecr/</a>.</p>
 </li>
 <li>
-<p>Select <strong>Create repository</strong>.</p>
+<p>Select <strong>Create repository</strong>.
+<img src="/images/push_image/screenshot_1752393032.png" alt="image"></p>
 </li>
 </ul>
 <ol start="2">
@@ -637,17 +638,20 @@
 <p><strong>Repository name</strong>: <code>spring-boot-app</code>.</p>
 </li>
 <li>
-<p><strong>Tag immutability</strong>: Select <strong>Mutable</strong>.</p>
+<p><strong>Tag immutability</strong>: Select <strong>Mutable</strong>.
+<img src="/images/push_image/screenshot_1752393109.png" alt="image"></p>
 </li>
 <li>
 <p><strong>Scan on push</strong>: Enable to scan for security vulnerabilities.</p>
 </li>
 <li>
-<p>Click <strong>Create repository</strong>.</p>
+<p>Click <strong>Create repository</strong>.
+<img src="/images/push_image/screenshot_1752393166.png" alt="image"></p>
 </li>
 </ul>
 <ol start="3">
-<li><strong>Save URI</strong>:</li>
+<li><strong>Save URI</strong>:
+<img src="/images/push_image/screenshot_1752393208.png" alt="image"></li>
 </ol>
 <ul>
 <li>Note down the repository URI, e.g. <code>&lt;account-id&gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app</code>.</li>
@@ -682,15 +686,17 @@
 <li>Tag images:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker tag trungho93/identity-service:0.9.0 &lt;account-id&gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest 
-</span></span></code></pre></div><ul>
+</span></span></code></pre></div><p><img src="/images/push_image/screenshot_1752393376.png" alt="image">
+<img src="/images/push_image/screenshot_1752393426.png" alt="image"></p>
+<ul>
 <li>Push images:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker push &lt;account-id&gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest 
-</span></span></code></pre></div><ol start="4">
-<li><strong>Verification</strong>:</li>
-</ol>
+</span></span></code></pre></div><p><img src="/images/push_image/screenshot_1752393822.png" alt="image">
+<img src="/images/push_image/screenshot_1752393914.png" alt="image">
+4. <strong>Verification</strong>:</p>
 <ul>
-<li>Access <strong>ECR Console</strong>, select repository <code>spring-boot-app</code>, check image with tag <code>latest</code>.</li>
+<li>Access <strong>ECR Console</strong>, select repository <code>spring-boot-app</code>, check image .</li>
 </ul>
 
 
@@ -966,19 +972,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752606923"></script>
+    <script src="/js/jquery.sticky.js?1752606923"></script>
+    <script src="/js/featherlight.min.js?1752606923"></script>
+    <script src="/js/highlight.pack.js?1752606923"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752606923"></script>
+    <script src="/js/learn.js?1752606923"></script>
+    <script src="/js/hugo-learn.js?1752606923"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752606923" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752606923"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

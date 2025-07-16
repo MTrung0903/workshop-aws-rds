@@ -12,21 +12,21 @@
     <title>Cài đặt AWS CLI trên máy cục bộ :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752602599" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752602599" rel="stylesheet">
+    <link href="/css/hybrid.css?1752602599" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752602599" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752602599" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752602599" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752602599" rel="stylesheet">
+    <link href="/css/theme.css?1752602599" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752602599" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752602599" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752602599"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752602599"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752602599"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752602599"></script>
 
     
   </div>
@@ -654,7 +654,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>aws --version
 </span></span></code></pre></div></li>
 <li>Kết quả ví dụ: <code>aws-cli/2.27.50 Python/3.13.4 Windows/11 exe/AMD64</code>.
-<img src="../../../static/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png" alt="image"></li>
+<img src="/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png" alt="image"></li>
 <li>Nếu báo lỗi <code>aws is not recognized</code>, kiểm tra biến PATH:
 <ul>
 <li>Nhấn Win + R, gõ <code>sysdm.cpl</code>, vào tab <strong>Advanced</strong> &gt; <strong>Environment Variables</strong>.</li>
@@ -675,17 +675,17 @@
 <li><strong>AWS Access Key ID</strong>: Lấy từ AWS Management Console:
 <ul>
 <li>Đăng nhập: <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a>.
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392631.png" alt="image"></li>
+<img src="/images/tao_aws_cli_local/screenshot_1752392631.png" alt="image"></li>
 <li>Vào <strong>Users</strong> &gt; Chọn user IAM &gt; <strong>Security credentials</strong> &gt; <strong>Create access key</strong>.
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392649.png" alt="image"></li>
+<img src="/images/tao_aws_cli_local/screenshot_1752392649.png" alt="image"></li>
 <li>Chọn <strong>Command Line Interface (CLI)</strong>, tải file CSV chứa <strong>Access Key ID</strong> và <strong>Secret Access Key</strong>.
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392694.png" alt="image">
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392743.png" alt="image">
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392760.png" alt="image"></li>
+<img src="/images/tao_aws_cli_local/screenshot_1752392694.png" alt="image">
+<img src="/images/tao_aws_cli_local/screenshot_1752392743.png" alt="image">
+<img src="/images/tao_aws_cli_local/screenshot_1752392760.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>AWS Secret Access Key</strong>: Nhập từ file CSV.
-<img src="../../../static/images/tao_aws_cli_local/screenshot_1752392995.png" alt="image"></li>
+<img src="/images/tao_aws_cli_local/screenshot_1752392995.png" alt="image"></li>
 <li><strong>Default region name</strong>: Nhập <code>us-east-1</code> (hoặc vùng bạn chọn).</li>
 <li><strong>Default output format</strong>: Nhập <code>json</code> hoặc nhấn Enter để dùng mặc định.</li>
 </ul>
@@ -977,19 +977,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752602599"></script>
+    <script src="/js/jquery.sticky.js?1752602599"></script>
+    <script src="/js/featherlight.min.js?1752602599"></script>
+    <script src="/js/highlight.pack.js?1752602599"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752602599"></script>
+    <script src="/js/learn.js?1752602599"></script>
+    <script src="/js/hugo-learn.js?1752602599"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752602599" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752602599"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

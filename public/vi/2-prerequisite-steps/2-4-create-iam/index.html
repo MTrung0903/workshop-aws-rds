@@ -12,21 +12,21 @@
     <title>Tạo IAM Role cho ECR :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752601484" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601484" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601484" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601484" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601484" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601484" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601484" rel="stylesheet">
-    <link href="/css/theme.css?1752601484" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601484" rel="stylesheet">
+    <link href="/css/nucleus.css?1752602599" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752602599" rel="stylesheet">
+    <link href="/css/hybrid.css?1752602599" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752602599" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752602599" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752602599" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752602599" rel="stylesheet">
+    <link href="/css/theme.css?1752602599" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752602599" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601484" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752602599" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601484"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752602599"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601484"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601484"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752602599"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752602599"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601484"></script>
+<script type="text/javascript" src="/js/search.js?1752602599"></script>
 
     
   </div>
@@ -627,28 +627,28 @@
 <li><strong>Truy cập IAM Console</strong>:
 <ul>
 <li>Mở: <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a>.
-<img src="../../../static/images/tao_role/screenshot_1752390613.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752390613.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>Tạo Policy đọc ECR</strong>:
 <ul>
 <li>Chọn <strong>Policies</strong> &gt; <strong>Create Policy</strong>.</li>
 <li>Chọn dịch vụ <strong>Elastic Container Registry</strong>.
-<img src="../../../static/images/tao_role/Screenshot%202025-07-13%20141451.png" alt="image"></li>
+<img src="/images/tao_role/Screenshot%202025-07-13%20141451.png" alt="image"></li>
 <li><strong>Permissions</strong>:
 <ul>
 <li><strong>List</strong>: <code>DescribeImages</code>, <code>ListImages</code>.</li>
 <li><strong>Read</strong>: <code>BatchGetImage</code>, <code>DescribeRepositories</code>, <code>GetAuthorizationToken</code>, <code>GetAccountSetting</code>.
-<img src="../../../static/images/tao_role/screenshot_1752391075.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391075.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>Resources</strong>: Chọn <strong>Any in this account</strong>.
-<img src="../../../static/images/tao_role/screenshot_1752391123.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391123.png" alt="image"></li>
 <li><strong>Policy name</strong>: <code>ReadECRRepositoryContent</code>.</li>
 <li><strong>Description</strong>: &ldquo;Cho phép kéo images và xem thông tin repository&rdquo;.
-<img src="../../../static/images/tao_role/screenshot_1752391177.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391177.png" alt="image"></li>
 <li>Nhấn <strong>Create policy</strong>.
-<img src="../../../static/images/tao_role/screenshot_1752391191.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391191.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>Tạo Policy ghi ECR</strong>:
@@ -662,25 +662,25 @@
 </li>
 <li><strong>Resources</strong>: Chọn <strong>Any in this account</strong>.</li>
 <li><strong>Policy name</strong>: <code>WriteECRRepositoryContent</code>.
-<img src="../../../static/images/tao_role/screenshot_1752391466.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391466.png" alt="image"></li>
 <li><strong>Description</strong>: &ldquo;Cho phép đẩy và xóa images&rdquo;.</li>
 <li>Nhấn <strong>Create policy</strong>.
-<img src="../../../static/images/tao_role/screenshot_1752391531.png" alt="image">
-<img src="../../../static/images/tao_role/screenshot_1752391573.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391531.png" alt="image">
+<img src="/images/tao_role/screenshot_1752391573.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>Tạo IAM Role</strong>:
 <ul>
 <li>Chọn <strong>Roles</strong> &gt; <strong>Create role</strong> &gt; <strong>AWS service</strong> &gt; <strong>EC2</strong>.
-<img src="../../../static/images/tao_role/screenshot_1752391638.png" alt="image">
-<img src="../../../static/images/tao_role/screenshot_1752391696.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391638.png" alt="image">
+<img src="/images/tao_role/screenshot_1752391696.png" alt="image"></li>
 <li>Gắn 2 policy: <code>ReadECRRepositoryContent</code>, <code>WriteECRRepositoryContent</code>.
-<img src="../../../static/images/tao_role/screenshot_1752391715.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391715.png" alt="image"></li>
 <li><strong>Role name</strong>: <code>CustomRWECRRole</code>.</li>
 <li><strong>Description</strong>: &ldquo;Role cho phép đọc và ghi ECR&rdquo;.
-<img src="../../../static/images/tao_role/screenshot_1752391754.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391754.png" alt="image"></li>
 <li>Nhấn <strong>Create role</strong>.
-<img src="../../../static/images/tao_role/screenshot_1752391780.png" alt="image"></li>
+<img src="/images/tao_role/screenshot_1752391780.png" alt="image"></li>
 </ul>
 </li>
 <li><strong>Xác minh</strong>:
@@ -967,19 +967,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601484"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601484"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601484"></script>
-    <script src="/js/jquery.sticky.js?1752601484"></script>
-    <script src="/js/featherlight.min.js?1752601484"></script>
-    <script src="/js/highlight.pack.js?1752601484"></script>
+    <script src="/js/clipboard.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752602599"></script>
+    <script src="/js/jquery.sticky.js?1752602599"></script>
+    <script src="/js/featherlight.min.js?1752602599"></script>
+    <script src="/js/highlight.pack.js?1752602599"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601484"></script>
-    <script src="/js/learn.js?1752601484"></script>
-    <script src="/js/hugo-learn.js?1752601484"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752602599"></script>
+    <script src="/js/learn.js?1752602599"></script>
+    <script src="/js/hugo-learn.js?1752602599"></script>
 
-    <link href="/mermaid/mermaid.css?1752601484" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601484"></script>
+    <link href="/mermaid/mermaid.css?1752602599" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752602599"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

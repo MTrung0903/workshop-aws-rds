@@ -12,21 +12,21 @@
     <title>Create RDS database :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752606923" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752606923" rel="stylesheet">
+    <link href="/css/hybrid.css?1752606923" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752606923" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752606923" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752606923" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752606923" rel="stylesheet">
+    <link href="/css/theme.css?1752606923" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752606923" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752606923" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752606923"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752606923"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752606923"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752606923"></script>
 
     
   </div>
@@ -587,6 +587,7 @@
 <nav id="TableOfContents">
   <ul>
     <li><a href="#6-create-rds-database-instance">6. Create RDS Database Instance</a></li>
+    <li><a href="#image"><img src="/images/tao_rds/screenshot_1752396596.png" alt="image"></a></li>
   </ul>
 </nav>
     </div>
@@ -621,55 +622,36 @@
 <p>Open: <a href="https://console.aws.amazon.com/rds/">https://console.aws.amazon.com/rds/</a>.</p>
 </li>
 <li>
-<p>Select <strong>Create database</strong>.</p>
+<p>Select <strong>Create database</strong>.
+<img src="/images/tao_rds/screenshot_1752395315.png" alt="image"></p>
 </li>
 </ul>
 <ol start="2">
 <li><strong>RDS configuration</strong>:</li>
 </ol>
 <ul>
-<li>
-<p><strong>Method</strong>: Standard create.</p>
-</li>
-<li>
-<p><strong>Engine</strong>: MySQL.</p>
-</li>
-<li>
-<p><strong>Version</strong>: MySQL 8.0 (latest).</p>
-</li>
-<li>
-<p><strong>Template</strong>: Dev/Test.</p>
-</li>
-<li>
-<p><strong>Multi-AZ</strong>: DB instance (for high availability).</p>
-</li>
-<li>
-<p><strong>DB instance identifier</strong>: <code>spring-boot-rds</code>.</p>
-</li>
-<li>
-<p><strong>Master username</strong>: <code>admin</code>.</p>
-</li>
-<li>
-<p><strong>Master password</strong>: Enter a secure password (eg: <code>SecurePass123!</code>) or select auto-generate.</p>
-</li>
-<li>
-<p><strong>Instance class</strong>: <code>db.t3.micro</code> (Free Tier eligible).</p>
-</li>
-<li>
-<p><strong>Storage</strong>: 20 GB, General Purpose SSD.</p>
-</li>
-<li>
-<p><strong>VPC</strong>: Select <code>spring-boot-vpc</code>.</p>
-</li>
-<li>
-<p><strong>DB Subnet Group</strong>: Select <code>rds-subnet-group</code>.</p>
-</li>
-<li>
-<p><strong>Security Group</strong>: Select <code>rds-sg</code>.</p>
-</li>
-<li>
-<p>Click <strong>Create database</strong>.</p>
-</li>
+<li><strong>Method</strong>: Standard create.</li>
+<li><strong>Engine</strong>: MySQL.</li>
+<li><strong>Version</strong>: MySQL 8.0 (latest).</li>
+<li><strong>Template</strong>: Free tier.
+<img src="/images/tao_rds/screenshot_1752395542.png" alt="image">
+<img src="/images/tao_rds/screenshot_1752395567.png" alt="image"></li>
+<li><strong>Multi-AZ</strong>: DB instance (for high availability).</li>
+<li><strong>DB instance identifier</strong>: <code>spring-boot-rds</code>.</li>
+<li><strong>Master username</strong>: <code>admin</code>.</li>
+<li><strong>Master password</strong>: Enter a secure password (eg: <code>SecurePass123!</code>) or select auto-generate.
+<img src="/images/tao_rds/screenshot_1752395643.png" alt="image">
+<img src="/images/tao_rds/screenshot_1752395666.png" alt="image"></li>
+<li><strong>Instance class</strong>: <code>db.t3.micro</code> (Free Tier eligible).</li>
+<li><strong>Storage</strong>: 20 GB, General Purpose SSD.</li>
+<li><strong>VPC</strong>: Select <code>spring-boot-vpc</code>.</li>
+<li><strong>DB Subnet Group</strong>: Select <code>rds-subnet-group</code>.</li>
+<li><strong>Security Group</strong>: Select <code>rds-sg</code>.
+<img src="/images/tao_rds/screenshot_1752395689.png" alt="image">
+<img src="/images/tao_rds/screenshot_1752395723.png" alt="image"></li>
+<li>Click <strong>Create database</strong>.
+<img src="/images/tao_rds/screenshot_1752396030.png" alt="image">
+<img src="/images/tao_rds/screenshot_1752396067.png" alt="image"></li>
 </ul>
 <ol start="3">
 <li><strong>Save RDS information</strong>:</li>
@@ -698,14 +680,13 @@
 <li>In MobaXterm, run:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql -h spring-boot-rds.cghg6wmuybac.us-east-1.rds.amazonaws.com -u admin -p
-</span></span></code></pre></div><ul>
+</span></span></code></pre></div><p><img src="/images/tao_rds/screenshot_1752396540.png" alt="image"></p>
+<ul>
 <li>Enter the RDS password.</li>
 <li>Create and check the database:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> DATABASES;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> first_cloud_users;
-</span></span><span style="display:flex;"><span>USE first_cloud_users;
-</span></span></code></pre></div><hr>
+</span></span></code></pre></div><h2 id="image"><img src="/images/tao_rds/screenshot_1752396596.png" alt="image"></h2>
 
 
 
@@ -980,19 +961,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752606923"></script>
+    <script src="/js/jquery.sticky.js?1752606923"></script>
+    <script src="/js/featherlight.min.js?1752606923"></script>
+    <script src="/js/highlight.pack.js?1752606923"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752606923"></script>
+    <script src="/js/learn.js?1752606923"></script>
+    <script src="/js/hugo-learn.js?1752606923"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752606923" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752606923"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

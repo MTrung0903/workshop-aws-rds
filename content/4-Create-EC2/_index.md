@@ -11,13 +11,15 @@ pre : " <b> 4. </b> "
 1. **Access Amazon EC2 Console**: 
 - Open: [https://console.aws.amazon.com/ec2/](https://console.aws.amazon.com/ec2/). 
 - Select **Launch instance**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394076.png)
 2. **EC2 configuration**: 
 - **Name**: `spring-boot-ec2`. 
 - **OS Image**: Select **Ubuntu Server 24.04 LTS**. 
+![image](/images/tao_ket_noi_ec2/screenshot_1752394125.png)
 - **Instance type**: `t3.medium` (2 vCPU, 4 GB RAM, Free Tier eligible). 
+![image](/images/tao_ket_noi_ec2/screenshot_1752394221.png)
 - **Key pair**: Create a new one (`spring-boot-key`) or select an existing `.pem` key pair.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394174.png)
 - **Network settings**:
 - **VPC**: Select `spring-boot-vpc`.
 
@@ -26,19 +28,21 @@ pre : " <b> 4. </b> "
 - **Auto-assign public IP**: Turn on **Enable**.
 
 - **Security Group**: Select `ec2-sg`.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394320.png)
 - Click **Launch instance**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394473.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752401505.png)
 3. **Assign IAM Role**:
 
 - In **EC2 Console**, select the `spring-boot-ec2` instance.
 
 - Click **Actions** > **Security** > **Modify IAM role**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394572.png)
 - Select the `CustomRWECRRole` role.
 
 - Click **Update IAM role**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394609.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752394625.png)
 4. **Verification**:
 
 - Check the `spring-boot-ec2` instance is in **Running** state and has Public IP.
@@ -64,18 +68,12 @@ pre : " <b> 4. </b> "
 - **Use private key**: In **Advanced SSH settings**, enable **Use private key**, select the `.pem` file (e.g. `spring-boot-key.pem`).
 
 3. Click **OK** to connect.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394859.png)
 ### 4.3. Verify connection
 
 - If the connection is successful, you will see the EC2 terminal in MobaXterm.
+![image](/images/tao_ket_noi_ec2/screenshot_1752394895.png)
 
-- Test:
-```bash
-whoami
-```
-Result: `ubuntu`.
-
----
 
 ## 5. Install Docker, Nginx, and MySQL Client on EC2
 
@@ -108,7 +106,8 @@ Reconnect via MobaXterm.
 ```bash
 docker --version
 ```
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752396889.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752397133.png)
 3. **Install Nginx**:
 - Run:
 ```bash

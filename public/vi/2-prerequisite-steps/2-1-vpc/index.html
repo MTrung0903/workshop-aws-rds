@@ -12,21 +12,21 @@
     <title>Tạo VPC :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752600306" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752600306" rel="stylesheet">
-    <link href="/css/hybrid.css?1752600306" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752600306" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752600306" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752600306" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752600306" rel="stylesheet">
-    <link href="/css/theme.css?1752600306" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752600306" rel="stylesheet">
+    <link href="/css/nucleus.css?1752602599" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752602599" rel="stylesheet">
+    <link href="/css/hybrid.css?1752602599" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752602599" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752602599" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752602599" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752602599" rel="stylesheet">
+    <link href="/css/theme.css?1752602599" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752602599" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752600306" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752602599" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752600306"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752602599"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752600306"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752600306"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752602599"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752602599"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752600306"></script>
+<script type="text/javascript" src="/js/search.js?1752602599"></script>
 
     
   </div>
@@ -630,7 +630,7 @@
 <ul>
 <li>Mở trình duyệt và truy cập: <a href="https://console.aws.amazon.com/vpc/">https://console.aws.amazon.com/vpc/</a>.</li>
 <li>Chọn <strong>Create VPC</strong> &gt; <strong>VPC and more</strong>.
-<img src="../../../static/images/tao_vpc/screenshot_1752387940.png" alt="image"></li>
+<img src="/images/tao_vpc/screenshot_1752387940.png" alt="image"></li>
 </ul>
 </li>
 <li>
@@ -638,7 +638,7 @@
 <ul>
 <li><strong>Name tag auto-generation</strong>: <code>spring-boot-vpc</code>.</li>
 <li><strong>IPv4 CIDR block</strong>: <code>10.0.0.0/16</code>.
-<img src="../../../static/images/tao_vpc/screenshot_1752388342.png" alt="image"></li>
+<img src="/images/tao_vpc/screenshot_1752388342.png" alt="image"></li>
 <li><strong>Availability Zones (AZs)</strong>: Chọn ít nhất 2 AZs (ví dụ: <code>us-east-1a</code>, <code>us-east-1b</code>).</li>
 <li><strong>Subnets</strong>:
 <ul>
@@ -647,12 +647,12 @@
 </ul>
 </li>
 <li><strong>NAT Gateways</strong>: 1 per AZ (để private subnets truy cập internet).
-<img src="../../../static/images/tao_vpc/screenshot_1752388383.png" alt="image"></li>
+<img src="/images/tao_vpc/screenshot_1752388383.png" alt="image"></li>
 <li><strong>VPC endpoints</strong>: None (hoặc chọn <strong>S3 Gateway</strong> nếu cần).</li>
 <li><strong>DNS options</strong>: Bật <strong>Enable DNS hostnames</strong> và <strong>Enable DNS resolution</strong>.
-<img src="../../../static/images/tao_vpc/screenshot_1752388459.png" alt="image"></li>
+<img src="/images/tao_vpc/screenshot_1752388459.png" alt="image"></li>
 <li>Nhấn <strong>Create VPC</strong>.
-<img src="../../../static/images/tao_vpc/screenshot_1752388666.png" alt="image"></li>
+<img src="/images/tao_vpc/screenshot_1752388666.png" alt="image"></li>
 </ul>
 </li>
 <li>
@@ -669,7 +669,7 @@
 <ul>
 <li>Trong <strong>Amazon VPC Console</strong>, chọn <strong>Subnets</strong>.</li>
 <li>Đảm bảo các public subnets được đặt tên như: <code>spring-boot-vpc-public-us-east-1a</code>, <code>spring-boot-vpc-public-us-east-1b</code>.
-<img src="../../../static/images/cau_hinh_public_subnets/screenshot_1752388960.png" alt="image"></li>
+<img src="/images/cau_hinh_public_subnets/screenshot_1752388960.png" alt="image"></li>
 </ul>
 </li>
 <li>
@@ -678,20 +678,20 @@
 <li>Chọn từng public subnet, nhấn <strong>Actions</strong> &gt; <strong>Edit subnet settings</strong>.</li>
 <li>Bật <strong>Enable auto-assign public IPv4 address</strong>.</li>
 <li>Nhấn <strong>Save</strong>.
-<img src="../../../static/images/cau_hinh_public_subnets/screenshot_1752388997.png" alt="image"></li>
+<img src="/images/cau_hinh_public_subnets/screenshot_1752388997.png" alt="image"></li>
 </ul>
 </li>
 <li>
 <p><strong>Xác minh</strong>:</p>
 <ul>
 <li>Kiểm tra cả hai public subnets đã bật auto-assign Public IP.
-<img src="../../../static/images/cau_hinh_public_subnets/screenshot_1752389021.png" alt="image"></li>
+<img src="/images/cau_hinh_public_subnets/screenshot_1752389021.png" alt="image"></li>
 </ul>
 </li>
 <li>
 <p><strong>Lặp lại cho public subnet thứ hai.</strong>
-<img src="../../../static/images/cau_hinh_public_subnets/screenshot_1752389143.png" alt="image">
-<img src="../../../static/images/cau_hinh_public_subnets/screenshot_1752389179.png" alt="image"></p>
+<img src="/images/cau_hinh_public_subnets/screenshot_1752389143.png" alt="image">
+<img src="/images/cau_hinh_public_subnets/screenshot_1752389179.png" alt="image"></p>
 </li>
 </ol>
 
@@ -969,19 +969,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752600306"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752600306"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752600306"></script>
-    <script src="/js/jquery.sticky.js?1752600306"></script>
-    <script src="/js/featherlight.min.js?1752600306"></script>
-    <script src="/js/highlight.pack.js?1752600306"></script>
+    <script src="/js/clipboard.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752602599"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752602599"></script>
+    <script src="/js/jquery.sticky.js?1752602599"></script>
+    <script src="/js/featherlight.min.js?1752602599"></script>
+    <script src="/js/highlight.pack.js?1752602599"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752600306"></script>
-    <script src="/js/learn.js?1752600306"></script>
-    <script src="/js/hugo-learn.js?1752600306"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752602599"></script>
+    <script src="/js/learn.js?1752602599"></script>
+    <script src="/js/hugo-learn.js?1752602599"></script>
 
-    <link href="/mermaid/mermaid.css?1752600306" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752600306"></script>
+    <link href="/mermaid/mermaid.css?1752602599" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752602599"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

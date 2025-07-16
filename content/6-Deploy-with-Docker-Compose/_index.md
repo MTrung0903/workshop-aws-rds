@@ -16,7 +16,7 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 ```
 - Replace `<account-id>` with your AWS account ID.
 - Output: `Login Succeeded`.
-
+![image](/images/test/screenshot_1752397195.png)
 ### 7.2. Create Docker Compose file
 
 1. **Create directory**:
@@ -62,7 +62,7 @@ app-network:
 driver: bridge 
 ``` 
 - Save file: Press `Ctrl+O`, Enter, `Ctrl+X`.
-
+![image](/images/test/screenshot_1752397642.png)
 ### 7.3. Create Nginx configuration file
 
 1. **Create file `nginx.conf`**: 

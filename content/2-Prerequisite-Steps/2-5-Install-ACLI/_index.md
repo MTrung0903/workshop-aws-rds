@@ -40,7 +40,7 @@ pre : " <b> 2.5 </b> "
 aws --version
 ```
 - Example output: `aws-cli/2.27.50 Python/3.13.4 Windows/11 exe/AMD64`.
-![image](../../../static/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png)
+![image](/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png)
 - If the error `aws is not recognized` appears, check the PATH variable:
 
 - Press Win + R, type `sysdm.cpl`, go to the **Advanced** tab > **Environment Variables**.
@@ -60,15 +60,15 @@ aws configure
 - **AWS Access Key ID**: Get from AWS Management Console:
 
 - Log in: [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/).
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392631.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392631.png)
 - Go to **Users** > Select IAM user > **Security credentials** > **Create access key**.
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392649.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392649.png)
 - Select **Command Line Interface (CLI)**, load the CSV file containing the **Access Key ID** and **Secret Access Key**.
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392694.png)
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392743.png)
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392760.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392694.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392743.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392760.png)
 - **AWS Secret Access Key**: Import from CSV file.
-![image](../../../static/images/tao_aws_cli_local/screenshot_1752392995.png)
+![image](/images/tao_aws_cli_local/screenshot_1752392995.png)
 - **Default region name**: Enter `us-east-1` (or the region of your choice).
 
 - **Default output format**: Enter `json` or press Enter to use the default.

@@ -12,21 +12,21 @@
     <title>Kiểm tra ứng dụng :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752599839" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752599839" rel="stylesheet">
-    <link href="/css/hybrid.css?1752599839" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752599839" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752599839" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752599839" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752599839" rel="stylesheet">
-    <link href="/css/theme.css?1752599839" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752599839" rel="stylesheet">
+    <link href="/css/nucleus.css?1752606684" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752606684" rel="stylesheet">
+    <link href="/css/hybrid.css?1752606684" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752606684" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752606684" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752606684" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752606684" rel="stylesheet">
+    <link href="/css/theme.css?1752606684" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752606684" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752599839" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752606684" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752599839"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752606684"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752599839"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752599839"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752606684"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752606684"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752599839"></script>
+<script type="text/javascript" src="/js/search.js?1752606684"></script>
 
     
   </div>
@@ -614,49 +614,26 @@
 
 	<h2 id="8-kiểm-tra-ứng-dụng">8. Kiểm tra ứng dụng</h2>
 <ol>
-<li>
-<p><strong>Truy cập ứng dụng</strong>:</p>
+<li><strong>Truy cập ứng dụng</strong>:
 <ul>
 <li>Mở trình duyệt hoặc Postman, truy cập:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http://&lt;EC2-Public-IP&gt;/api/&lt;endpoint&gt;
-</span></span></code></pre></div>Ví dụ: Nếu Spring Boot có endpoint <code>/api/users</code>, truy cập <code>http://&lt;EC2-Public-IP&gt;/api/users</code>.</li>
+</span></span></code></pre></div>Ví dụ: Nếu Spring Boot có endpoint <code>/api/users</code>, truy cập <code>http://&lt;EC2-Public-IP&gt;/api/users</code>.
+<img src="/images/test/screenshot_1752401348.png" alt="image"></li>
 </ul>
 </li>
-<li>
-<p><strong>Kiểm tra log nếu có lỗi</strong>:</p>
+<li><strong>Kiểm tra log nếu có lỗi</strong>:
 <ul>
 <li>Log container Spring Boot:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo docker logs &lt;container-id-backend&gt;
-</span></span></code></pre></div>Thay <code>&lt;container-id-backend&gt;</code> bằng ID của container <code>backend</code> (lấy từ <code>docker ps</code>).</li>
+</span></span></code></pre></div>Thay <code>&lt;container-id-backend&gt;</code> bằng ID của container <code>backend</code> (lấy từ <code>docker ps</code>).
+<img src="/images/test/screenshot_1752400820.png" alt="image"></li>
 <li>Log Nginx:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo tail -f /var/log/nginx/error.log
 </span></span></code></pre></div></li>
 </ul>
 </li>
-<li>
-<p><strong>Kiểm tra kết nối RDS</strong>:</p>
-<ul>
-<li>Trong terminal EC2:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql -h &lt;RDS Endpoint&gt; -u admin -p
-</span></span></code></pre></div></li>
-<li>Nhập mật khẩu RDS.</li>
-<li>Kiểm tra dữ liệu:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>USE first_cloud_users;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> TABLES;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> users;
-</span></span></code></pre></div></li>
-</ul>
-</li>
-<li>
-<p><strong>Xử lý sự cố</strong>:</p>
-<ul>
-<li><strong>Lỗi kết nối RDS</strong>: Kiểm tra Security Group <code>rds-sg</code> có cho phép <code>ec2-sg</code> trên cổng 3306.</li>
-<li><strong>Lỗi API</strong>: Kiểm tra log container và đảm bảo <code>SPRING_DATASOURCE_URL</code> đúng.</li>
-<li><strong>Lỗi Nginx</strong>: Kiểm tra <code>nginx.conf</code> và log <code>/var/log/nginx/error.log</code>.</li>
-</ul>
-</li>
 </ol>
-<hr>
 
 
 
@@ -931,19 +908,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752599839"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752599839"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752599839"></script>
-    <script src="/js/jquery.sticky.js?1752599839"></script>
-    <script src="/js/featherlight.min.js?1752599839"></script>
-    <script src="/js/highlight.pack.js?1752599839"></script>
+    <script src="/js/clipboard.min.js?1752606684"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752606684"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752606684"></script>
+    <script src="/js/jquery.sticky.js?1752606684"></script>
+    <script src="/js/featherlight.min.js?1752606684"></script>
+    <script src="/js/highlight.pack.js?1752606684"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752599839"></script>
-    <script src="/js/learn.js?1752599839"></script>
-    <script src="/js/hugo-learn.js?1752599839"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752606684"></script>
+    <script src="/js/learn.js?1752606684"></script>
+    <script src="/js/hugo-learn.js?1752606684"></script>
 
-    <link href="/mermaid/mermaid.css?1752599839" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752599839"></script>
+    <link href="/mermaid/mermaid.css?1752606684" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752606684"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

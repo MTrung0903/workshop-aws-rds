@@ -12,21 +12,21 @@
     <title>Clean up resources :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752606923" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752606923" rel="stylesheet">
+    <link href="/css/hybrid.css?1752606923" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752606923" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752606923" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752606923" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752606923" rel="stylesheet">
+    <link href="/css/theme.css?1752606923" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752606923" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752606923" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752606923"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752606923"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752606923"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752606923"></script>
 
     
   </div>
@@ -626,37 +626,45 @@
 <li><strong>Delete the ECR Repository</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>ECR Console</strong>, select <code>spring-boot-app</code> &gt; <strong>Delete</strong>.</li>
+<li>Go to <strong>ECR Console</strong>, select <code>spring-boot-app</code> &gt; <strong>Delete</strong>.
+<img src="/images/clean/screenshot_1752401672.png" alt="image"></li>
 </ul>
 <ol start="3">
 <li><strong>Delete the EC2 Instance</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>EC2 Console</strong>, select <code>spring-boot-ec2</code> &gt; <strong>Actions</strong> &gt; <strong>Instance State</strong> &gt; <strong>Terminate instance</strong>.</li>
+<li>Go to <strong>EC2 Console</strong>, select <code>spring-boot-ec2</code> &gt; <strong>Actions</strong> &gt; <strong>Instance State</strong> &gt; <strong>Terminate instance</strong>.
+<img src="/images/clean/screenshot_1752401691.png" alt="image"></li>
 </ul>
 <ol start="4">
 <li><strong>Delete RDS Instance</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>RDS Console</strong>, select <code>spring-boot-rds</code> &gt; <strong>Actions</strong> &gt; <strong>Delete</strong>, enter <code>delete me</code>.</li>
+<li>Go to <strong>RDS Console</strong>, select <code>spring-boot-rds</code> &gt; <strong>Actions</strong> &gt; <strong>Delete</strong>, enter <code>delete me</code>.
+<img src="/images/clean/screenshot_1752401728.png" alt="image">
+<img src="/images/clean/screenshot_1752401743.png" alt="image"></li>
 </ul>
 <ol start="5">
 <li><strong>Delete Security Groups</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>VPC Console</strong>, select <code>ec2-sg</code> and <code>rds-sg</code> &gt; <strong>Actions</strong> &gt; <strong>Delete security group</strong>.</li>
+<li>Go to <strong>VPC Console</strong>, select <code>ec2-sg</code> and <code>rds-sg</code> &gt; <strong>Actions</strong> &gt; <strong>Delete security group</strong>.
+<img src="/images/clean/screenshot_1752401874.png" alt="image"></li>
 </ul>
 <ol start="6">
 <li><strong>Delete IAM Role</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>IAM Console</strong>, select <code>CustomRWECRRole</code> &gt; <strong>Delete</strong>.</li>
+<li>Go to <strong>IAM Console</strong>, select <code>CustomRWECRRole</code> &gt; <strong>Delete</strong>.
+<img src="/images/clean/screenshot_1752401928.png" alt="image"></li>
 </ul>
 <ol start="7">
 <li><strong>Delete VPC</strong>:</li>
 </ol>
 <ul>
-<li>Go to <strong>VPC Console</strong>, select <code>spring-boot-vpc</code> &gt; <strong>Actions</strong> &gt; <strong>Delete VPC</strong>, make sure to delete all dependent resources.</li>
+<li>Go to <strong>VPC Console</strong>, select <code>spring-boot-vpc</code> &gt; <strong>Actions</strong> &gt; <strong>Delete VPC</strong>, make sure to delete all dependent resources.
+<img src="/images/clean/screenshot_1752402300.png" alt="image">
+<img src="/images/clean/screenshot_1752402343.png" alt="image"></li>
 </ul>
 <hr>
 
@@ -930,19 +938,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752606923"></script>
+    <script src="/js/jquery.sticky.js?1752606923"></script>
+    <script src="/js/featherlight.min.js?1752606923"></script>
+    <script src="/js/highlight.pack.js?1752606923"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752606923"></script>
+    <script src="/js/learn.js?1752606923"></script>
+    <script src="/js/hugo-learn.js?1752606923"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752606923" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752606923"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

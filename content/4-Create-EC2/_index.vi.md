@@ -11,25 +11,32 @@ pre : " <b> 4. </b> "
 1. **Truy cập Amazon EC2 Console**:
    - Mở: [https://console.aws.amazon.com/ec2/](https://console.aws.amazon.com/ec2/).
    - Chọn **Launch instance**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394076.png)
 2. **Cấu hình EC2**:
    - **Name**: `spring-boot-ec2`.
    - **OS Image**: Chọn **Ubuntu Server 24.04 LTS**.
+   ![image](/images/tao_ket_noi_ec2/screenshot_1752394125.png)
    - **Instance type**: `t3.medium` (2 vCPU, 4 GB RAM, Free Tier eligible).
+   ![image](/images/tao_ket_noi_ec2/screenshot_1752394221.png)
    - **Key pair**: Tạo mới (`spring-boot-key`) hoặc chọn cặp khóa `.pem` hiện có.
+   ![image](/images/tao_ket_noi_ec2/screenshot_1752394174.png)
    - **Network settings**:
      - **VPC**: Chọn `spring-boot-vpc`.
      - **Subnet**: Chọn public subnet (ví dụ: `spring-boot-vpc-public-us-east-1a`).
      - **Auto-assign public IP**: Bật **Enable**.
      - **Security Group**: Chọn `ec2-sg`.
+     ![image](/images/tao_ket_noi_ec2/screenshot_1752394320.png)
    - Nhấn **Launch instance**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394473.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752401505.png)
 3. **Gắn IAM Role**:
    - Trong **EC2 Console**, chọn instance `spring-boot-ec2`.
    - Nhấn **Actions** > **Security** > **Modify IAM role**.
+   ![image](/images/tao_ket_noi_ec2/screenshot_1752394572.png)
    - Chọn role `CustomRWECRRole`.
    - Nhấn **Update IAM role**.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394609.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752394625.png)
 4. **Xác minh**:
    - Kiểm tra instance `spring-boot-ec2` trong trạng thái **Running** và có Public IP.
 
@@ -51,17 +58,12 @@ pre : " <b> 4. </b> "
    - **Specify username**: Nhập `ubuntu` (cho Ubuntu AMI).
    - **Use private key**: Trong **Advanced SSH settings**, bật **Use private key**, chọn file `.pem` (ví dụ: `spring-boot-key.pem`).
 3. Nhấn **OK** để kết nối.
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752394859.png)
 ### 4.3. Xác minh kết nối
 
 - Nếu kết nối thành công, bạn sẽ thấy terminal EC2 trong MobaXterm.
-- Kiểm tra:
-  ```bash
-  whoami
-  ```
-  Kết quả: `ubuntu`.
+![image](/images/tao_ket_noi_ec2/screenshot_1752394895.png)
 
----
 
 ## 5. Cài đặt Docker, Nginx, và MySQL Client trên EC2
 
@@ -94,7 +96,8 @@ pre : " <b> 4. </b> "
      ```bash
      docker --version
      ```
-
+![image](/images/tao_ket_noi_ec2/screenshot_1752396889.png)
+![image](/images/tao_ket_noi_ec2/screenshot_1752397133.png)
 3. **Cài đặt Nginx**:
    - Chạy:
      ```bash

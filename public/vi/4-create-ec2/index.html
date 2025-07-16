@@ -12,21 +12,21 @@
     <title>Tạo EC2 :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752604806" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752604806" rel="stylesheet">
+    <link href="/css/hybrid.css?1752604806" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752604806" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752604806" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752604806" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752604806" rel="stylesheet">
+    <link href="/css/theme.css?1752604806" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752604806" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752604806" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752604806"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752604806"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752604806"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752604806"></script>
 
     
   </div>
@@ -622,42 +622,48 @@
 
 	<h2 id="3-tạo-ec2-instance">3. Tạo EC2 Instance</h2>
 <ol>
-<li>
-<p><strong>Truy cập Amazon EC2 Console</strong>:</p>
+<li><strong>Truy cập Amazon EC2 Console</strong>:
 <ul>
 <li>Mở: <a href="https://console.aws.amazon.com/ec2/">https://console.aws.amazon.com/ec2/</a>.</li>
-<li>Chọn <strong>Launch instance</strong>.</li>
+<li>Chọn <strong>Launch instance</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394076.png" alt="image"></li>
 </ul>
 </li>
-<li>
-<p><strong>Cấu hình EC2</strong>:</p>
+<li><strong>Cấu hình EC2</strong>:
 <ul>
 <li><strong>Name</strong>: <code>spring-boot-ec2</code>.</li>
-<li><strong>OS Image</strong>: Chọn <strong>Ubuntu Server 24.04 LTS</strong>.</li>
-<li><strong>Instance type</strong>: <code>t3.medium</code> (2 vCPU, 4 GB RAM, Free Tier eligible).</li>
-<li><strong>Key pair</strong>: Tạo mới (<code>spring-boot-key</code>) hoặc chọn cặp khóa <code>.pem</code> hiện có.</li>
+<li><strong>OS Image</strong>: Chọn <strong>Ubuntu Server 24.04 LTS</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394125.png" alt="image"></li>
+<li><strong>Instance type</strong>: <code>t3.medium</code> (2 vCPU, 4 GB RAM, Free Tier eligible).
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394221.png" alt="image"></li>
+<li><strong>Key pair</strong>: Tạo mới (<code>spring-boot-key</code>) hoặc chọn cặp khóa <code>.pem</code> hiện có.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394174.png" alt="image"></li>
 <li><strong>Network settings</strong>:
 <ul>
 <li><strong>VPC</strong>: Chọn <code>spring-boot-vpc</code>.</li>
 <li><strong>Subnet</strong>: Chọn public subnet (ví dụ: <code>spring-boot-vpc-public-us-east-1a</code>).</li>
 <li><strong>Auto-assign public IP</strong>: Bật <strong>Enable</strong>.</li>
-<li><strong>Security Group</strong>: Chọn <code>ec2-sg</code>.</li>
+<li><strong>Security Group</strong>: Chọn <code>ec2-sg</code>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394320.png" alt="image"></li>
 </ul>
 </li>
-<li>Nhấn <strong>Launch instance</strong>.</li>
+<li>Nhấn <strong>Launch instance</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394473.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752401505.png" alt="image"></li>
 </ul>
 </li>
-<li>
-<p><strong>Gắn IAM Role</strong>:</p>
+<li><strong>Gắn IAM Role</strong>:
 <ul>
 <li>Trong <strong>EC2 Console</strong>, chọn instance <code>spring-boot-ec2</code>.</li>
-<li>Nhấn <strong>Actions</strong> &gt; <strong>Security</strong> &gt; <strong>Modify IAM role</strong>.</li>
+<li>Nhấn <strong>Actions</strong> &gt; <strong>Security</strong> &gt; <strong>Modify IAM role</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394572.png" alt="image"></li>
 <li>Chọn role <code>CustomRWECRRole</code>.</li>
-<li>Nhấn <strong>Update IAM role</strong>.</li>
+<li>Nhấn <strong>Update IAM role</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394609.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394625.png" alt="image"></li>
 </ul>
 </li>
-<li>
-<p><strong>Xác minh</strong>:</p>
+<li><strong>Xác minh</strong>:
 <ul>
 <li>Kiểm tra instance <code>spring-boot-ec2</code> trong trạng thái <strong>Running</strong> và có Public IP.</li>
 </ul>
@@ -684,16 +690,14 @@
 <li><strong>Use private key</strong>: Trong <strong>Advanced SSH settings</strong>, bật <strong>Use private key</strong>, chọn file <code>.pem</code> (ví dụ: <code>spring-boot-key.pem</code>).</li>
 </ul>
 </li>
-<li>Nhấn <strong>OK</strong> để kết nối.</li>
+<li>Nhấn <strong>OK</strong> để kết nối.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394859.png" alt="image"></li>
 </ol>
 <h3 id="43-xác-minh-kết-nối">4.3. Xác minh kết nối</h3>
 <ul>
-<li>Nếu kết nối thành công, bạn sẽ thấy terminal EC2 trong MobaXterm.</li>
-<li>Kiểm tra:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>whoami
-</span></span></code></pre></div>Kết quả: <code>ubuntu</code>.</li>
+<li>Nếu kết nối thành công, bạn sẽ thấy terminal EC2 trong MobaXterm.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394895.png" alt="image"></li>
 </ul>
-<hr>
 <h2 id="5-cài-đặt-docker-nginx-và-mysql-client-trên-ec2">5. Cài đặt Docker, Nginx, và MySQL Client trên EC2</h2>
 <ol>
 <li>
@@ -728,8 +732,10 @@
 </span></span></code></pre></div></li>
 </ul>
 </li>
-<li>
-<p><strong>Cài đặt Nginx</strong>:</p>
+</ol>
+<p><img src="/images/tao_ket_noi_ec2/screenshot_1752396889.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752397133.png" alt="image">
+3. <strong>Cài đặt Nginx</strong>:</p>
 <ul>
 <li>Chạy:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install -y nginx
@@ -740,7 +746,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl status nginx
 </span></span></code></pre></div></li>
 </ul>
-</li>
+<ol start="4">
 <li>
 <p><strong>Cài đặt MySQL Client</strong>:</p>
 <ul>
@@ -1043,19 +1049,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752604806"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752604806"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752604806"></script>
+    <script src="/js/jquery.sticky.js?1752604806"></script>
+    <script src="/js/featherlight.min.js?1752604806"></script>
+    <script src="/js/highlight.pack.js?1752604806"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752604806"></script>
+    <script src="/js/learn.js?1752604806"></script>
+    <script src="/js/hugo-learn.js?1752604806"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752604806" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752604806"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

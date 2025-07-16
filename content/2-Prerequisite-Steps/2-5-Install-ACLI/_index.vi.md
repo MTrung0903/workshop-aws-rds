@@ -28,7 +28,7 @@ pre : " <b> 2.5 </b> "
      aws --version
      ```
    - Kết quả ví dụ: `aws-cli/2.27.50 Python/3.13.4 Windows/11 exe/AMD64`.
-   ![image](../../../static/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png)
+   ![image](/images/tao_aws_cli_local/Screenshot%202025-07-13%20144159.png)
    - Nếu báo lỗi `aws is not recognized`, kiểm tra biến PATH:
      - Nhấn Win + R, gõ `sysdm.cpl`, vào tab **Advanced** > **Environment Variables**.
      - Trong **System Variables**, tìm **Path**, thêm `C:\Program Files\Amazon\AWSCLIV2` nếu chưa có.
@@ -42,15 +42,15 @@ pre : " <b> 2.5 </b> "
    - Nhập thông tin:
      - **AWS Access Key ID**: Lấy từ AWS Management Console:
        - Đăng nhập: [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/).
-       ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392631.png)
+       ![image](/images/tao_aws_cli_local/screenshot_1752392631.png)
        - Vào **Users** > Chọn user IAM > **Security credentials** > **Create access key**.
-       ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392649.png)
+       ![image](/images/tao_aws_cli_local/screenshot_1752392649.png)
        - Chọn **Command Line Interface (CLI)**, tải file CSV chứa **Access Key ID** và **Secret Access Key**.
-       ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392694.png)
-       ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392743.png)
-       ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392760.png)
+       ![image](/images/tao_aws_cli_local/screenshot_1752392694.png)
+       ![image](/images/tao_aws_cli_local/screenshot_1752392743.png)
+       ![image](/images/tao_aws_cli_local/screenshot_1752392760.png)
      - **AWS Secret Access Key**: Nhập từ file CSV.
-     ![image](../../../static/images/tao_aws_cli_local/screenshot_1752392995.png)
+     ![image](/images/tao_aws_cli_local/screenshot_1752392995.png)
      - **Default region name**: Nhập `us-east-1` (hoặc vùng bạn chọn).
      - **Default output format**: Nhập `json` hoặc nhấn Enter để dùng mặc định.
    - Thông tin được lưu vào:

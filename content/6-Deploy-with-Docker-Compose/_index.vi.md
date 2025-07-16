@@ -16,7 +16,7 @@ pre : " <b> 6. </b> "
    ```
    - Thay `<account-id>` bằng ID tài khoản AWS.
    - Kết quả: `Login Succeeded`.
-
+![image](/images/test/screenshot_1752397195.png)
 ### 7.2. Tạo file Docker Compose
 
 1. **Tạo thư mục**:
@@ -60,7 +60,7 @@ pre : " <b> 6. </b> "
          driver: bridge
      ```
    - Lưu file: Nhấn `Ctrl+O`, Enter, `Ctrl+X`.
-
+![image](/images/test/screenshot_1752397642.png)
 ### 7.3. Tạo file cấu hình Nginx
 
 1. **Tạo file `nginx.conf`**:

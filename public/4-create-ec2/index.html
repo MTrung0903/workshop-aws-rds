@@ -12,21 +12,21 @@
     <title>Create EC2 :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752601928" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752601928" rel="stylesheet">
-    <link href="/css/hybrid.css?1752601928" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752601928" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752601928" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752601928" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752601928" rel="stylesheet">
-    <link href="/css/theme.css?1752601928" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752601928" rel="stylesheet">
+    <link href="/css/nucleus.css?1752606923" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752606923" rel="stylesheet">
+    <link href="/css/hybrid.css?1752606923" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752606923" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752606923" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752606923" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752606923" rel="stylesheet">
+    <link href="/css/theme.css?1752606923" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752606923" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752601928" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752606923" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752601928"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752606923"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752601928"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752601928"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752606923"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752606923"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752601928"></script>
+<script type="text/javascript" src="/js/search.js?1752606923"></script>
 
     
   </div>
@@ -626,7 +626,8 @@
 </ol>
 <ul>
 <li>Open: <a href="https://console.aws.amazon.com/ec2/">https://console.aws.amazon.com/ec2/</a>.</li>
-<li>Select <strong>Launch instance</strong>.</li>
+<li>Select <strong>Launch instance</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394076.png" alt="image"></li>
 </ul>
 <ol start="2">
 <li><strong>EC2 configuration</strong>:</li>
@@ -636,13 +637,16 @@
 <p><strong>Name</strong>: <code>spring-boot-ec2</code>.</p>
 </li>
 <li>
-<p><strong>OS Image</strong>: Select <strong>Ubuntu Server 24.04 LTS</strong>.</p>
+<p><strong>OS Image</strong>: Select <strong>Ubuntu Server 24.04 LTS</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394125.png" alt="image"></p>
 </li>
 <li>
-<p><strong>Instance type</strong>: <code>t3.medium</code> (2 vCPU, 4 GB RAM, Free Tier eligible).</p>
+<p><strong>Instance type</strong>: <code>t3.medium</code> (2 vCPU, 4 GB RAM, Free Tier eligible).
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394221.png" alt="image"></p>
 </li>
 <li>
-<p><strong>Key pair</strong>: Create a new one (<code>spring-boot-key</code>) or select an existing <code>.pem</code> key pair.</p>
+<p><strong>Key pair</strong>: Create a new one (<code>spring-boot-key</code>) or select an existing <code>.pem</code> key pair.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394174.png" alt="image"></p>
 </li>
 <li>
 <p><strong>Network settings</strong>:</p>
@@ -657,10 +661,13 @@
 <p><strong>Auto-assign public IP</strong>: Turn on <strong>Enable</strong>.</p>
 </li>
 <li>
-<p><strong>Security Group</strong>: Select <code>ec2-sg</code>.</p>
+<p><strong>Security Group</strong>: Select <code>ec2-sg</code>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394320.png" alt="image"></p>
 </li>
 <li>
-<p>Click <strong>Launch instance</strong>.</p>
+<p>Click <strong>Launch instance</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394473.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752401505.png" alt="image"></p>
 </li>
 </ul>
 <ol start="3">
@@ -671,13 +678,16 @@
 <p>In <strong>EC2 Console</strong>, select the <code>spring-boot-ec2</code> instance.</p>
 </li>
 <li>
-<p>Click <strong>Actions</strong> &gt; <strong>Security</strong> &gt; <strong>Modify IAM role</strong>.</p>
+<p>Click <strong>Actions</strong> &gt; <strong>Security</strong> &gt; <strong>Modify IAM role</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394572.png" alt="image"></p>
 </li>
 <li>
 <p>Select the <code>CustomRWECRRole</code> role.</p>
 </li>
 <li>
-<p>Click <strong>Update IAM role</strong>.</p>
+<p>Click <strong>Update IAM role</strong>.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394609.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394625.png" alt="image"></p>
 </li>
 </ul>
 <ol start="4">
@@ -711,20 +721,14 @@
 <li><strong>Use private key</strong>: In <strong>Advanced SSH settings</strong>, enable <strong>Use private key</strong>, select the <code>.pem</code> file (e.g. <code>spring-boot-key.pem</code>).</li>
 </ul>
 <ol start="3">
-<li>Click <strong>OK</strong> to connect.</li>
+<li>Click <strong>OK</strong> to connect.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394859.png" alt="image"></li>
 </ol>
 <h3 id="43-verify-connection">4.3. Verify connection</h3>
 <ul>
-<li>
-<p>If the connection is successful, you will see the EC2 terminal in MobaXterm.</p>
-</li>
-<li>
-<p>Test:</p>
-</li>
+<li>If the connection is successful, you will see the EC2 terminal in MobaXterm.
+<img src="/images/tao_ket_noi_ec2/screenshot_1752394895.png" alt="image"></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>whoami
-</span></span></code></pre></div><p>Result: <code>ubuntu</code>.</p>
-<hr>
 <h2 id="5-install-docker-nginx-and-mysql-client-on-ec2">5. Install Docker, Nginx, and MySQL Client on EC2</h2>
 <ol>
 <li><strong>SSH into EC2</strong>:</li>
@@ -760,9 +764,9 @@
 <li>Check Docker:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker --version
-</span></span></code></pre></div><ol start="3">
-<li><strong>Install Nginx</strong>:</li>
-</ol>
+</span></span></code></pre></div><p><img src="/images/tao_ket_noi_ec2/screenshot_1752396889.png" alt="image">
+<img src="/images/tao_ket_noi_ec2/screenshot_1752397133.png" alt="image">
+3. <strong>Install Nginx</strong>:</p>
 <ul>
 <li>Run:</li>
 </ul>
@@ -1074,19 +1078,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752601928"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752601928"></script>
-    <script src="/js/jquery.sticky.js?1752601928"></script>
-    <script src="/js/featherlight.min.js?1752601928"></script>
-    <script src="/js/highlight.pack.js?1752601928"></script>
+    <script src="/js/clipboard.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752606923"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752606923"></script>
+    <script src="/js/jquery.sticky.js?1752606923"></script>
+    <script src="/js/featherlight.min.js?1752606923"></script>
+    <script src="/js/highlight.pack.js?1752606923"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752601928"></script>
-    <script src="/js/learn.js?1752601928"></script>
-    <script src="/js/hugo-learn.js?1752601928"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752606923"></script>
+    <script src="/js/learn.js?1752606923"></script>
+    <script src="/js/hugo-learn.js?1752606923"></script>
 
-    <link href="/mermaid/mermaid.css?1752601928" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752601928"></script>
+    <link href="/mermaid/mermaid.css?1752606923" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752606923"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
