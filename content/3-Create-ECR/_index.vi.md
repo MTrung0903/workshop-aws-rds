@@ -25,13 +25,42 @@ pre : " <b> 3. </b> "
 
 ### 2.2. Đẩy Docker image lên ECR
 
-1. **Đảm bảo Docker image cục bộ**:
+1. **Chuẩn bị mã nguồn ứng dụng**:
+   - Clone project Spring Boot từ GitHub (hoặc chuẩn bị mã nguồn):
+     ```bash
+     git clone https://github.com/MTrung0903/identity-service.git
+     cd <thu-muc-project>
+     ```
+   - Đảm bảo có file `Dockerfile` ở thư mục gốc. Nếu chưa có, tạo file với nội dung sau:
+     ```dockerfile
+      FROM maven:3.9.8-amazoncorretto-21 AS build
+      WORKDIR /app
+      COPY pom.xml .
+      COPY src ./src
+      RUN mvn package -DskipTests
+      FROM amazoncorretto:21.0.4
+      WORKDIR /app
+      COPY --from=build /app/target/*.jar app.jar
+      ENTRYPOINT ["java", "-jar", "app.jar"]
+     ```
+   - Build file JAR Spring Boot (nếu dùng Maven):
+     ```bash
+     ./mvnw clean package
+     # hoặc
+     mvn clean package
+     ```
+   - Build Docker image:
+     ```bash
+     docker build -t <ten-image-cua-ban>:<tag> .
+     ```
+
+2. **Đảm bảo Docker image cục bộ**:
    - Xác minh image Spring Boot cục bộ (ví dụ: `trungho93/identity-service:0.9.0`):
      ```bash
      docker images
      ```
 
-2. **Đăng nhập vào ECR**:
+3. **Đăng nhập vào ECR**:
    - Chạy:
      ```bash
      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
@@ -39,7 +68,7 @@ pre : " <b> 3. </b> "
    - Thay `<account-id>` bằng ID tài khoản AWS của bạn (ví dụ: `238702553701`).
    - Kết quả: `Login Succeeded`.
 
-3. **Tag và đẩy image**:
+4. **Tag và đẩy image**:
    - Tag image:
      ```bash
      docker tag trungho93/identity-service:0.9.0 <account-id>.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest
@@ -53,5 +82,5 @@ pre : " <b> 3. </b> "
      ```
 ![image](/images/push_image/screenshot_1752393822.png)
 ![image](/images/push_image/screenshot_1752393914.png)
-4. **Xác minh**:
+5. **Xác minh**:
    - Truy cập **ECR Console**, chọn repository `spring-boot-app`, kiểm tra image .

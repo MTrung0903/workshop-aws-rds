@@ -12,21 +12,21 @@
     <title>Tạo ECR Repository :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752603350" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752603350" rel="stylesheet">
-    <link href="/css/hybrid.css?1752603350" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752603350" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752603350" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752603350" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752603350" rel="stylesheet">
-    <link href="/css/theme.css?1752603350" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752603350" rel="stylesheet">
+    <link href="/css/nucleus.css?1752650449" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752650449" rel="stylesheet">
+    <link href="/css/hybrid.css?1752650449" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752650449" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752650449" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752650449" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752650449" rel="stylesheet">
+    <link href="/css/theme.css?1752650449" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752650449" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752603350" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752650449" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752603350"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752650449"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752603350"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752603350"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752650449"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752650449"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752603350"></script>
+<script type="text/javascript" src="/js/search.js?1752650449"></script>
 
     
   </div>
@@ -646,6 +646,34 @@
 <h3 id="22-đẩy-docker-image-lên-ecr">2.2. Đẩy Docker image lên ECR</h3>
 <ol>
 <li>
+<p><strong>Chuẩn bị mã nguồn ứng dụng</strong>:</p>
+<ul>
+<li>Clone project Spring Boot từ GitHub (hoặc chuẩn bị mã nguồn):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/MTrung0903/identity-service.git
+</span></span><span style="display:flex;"><span>cd &lt;thu-muc-project&gt;
+</span></span></code></pre></div></li>
+<li>Đảm bảo có file <code>Dockerfile</code> ở thư mục gốc. Nếu chưa có, tạo file với nội dung sau:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span> FROM maven:3.9.8-amazoncorretto-21 AS build<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> WORKDIR /app<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> COPY pom.xml .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> COPY src ./src<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> RUN mvn package -DskipTests<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> FROM amazoncorretto:21.0.4<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> WORKDIR /app<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> COPY --from<span style="color:#f92672">=</span>build /app/target/*.jar app.jar<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span> ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;java&#34;</span>, <span style="color:#e6db74">&#34;-jar&#34;</span>, <span style="color:#e6db74">&#34;app.jar&#34;</span><span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+<li>Build file JAR Spring Boot (nếu dùng Maven):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mvnw clean package
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># hoặc</span>
+</span></span><span style="display:flex;"><span>mvn clean package
+</span></span></code></pre></div></li>
+<li>Build Docker image:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t &lt;ten-image-cua-ban&gt;:&lt;tag&gt; .
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
 <p><strong>Đảm bảo Docker image cục bộ</strong>:</p>
 <ul>
 <li>Xác minh image Spring Boot cục bộ (ví dụ: <code>trungho93/identity-service:0.9.0</code>):
@@ -681,7 +709,7 @@
 </ol>
 <p><img src="/images/push_image/screenshot_1752393822.png" alt="image">
 <img src="/images/push_image/screenshot_1752393914.png" alt="image">
-4. <strong>Xác minh</strong>:</p>
+5. <strong>Xác minh</strong>:</p>
 <ul>
 <li>Truy cập <strong>ECR Console</strong>, chọn repository <code>spring-boot-app</code>, kiểm tra image .</li>
 </ul>
@@ -959,19 +987,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752603350"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752603350"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752603350"></script>
-    <script src="/js/jquery.sticky.js?1752603350"></script>
-    <script src="/js/featherlight.min.js?1752603350"></script>
-    <script src="/js/highlight.pack.js?1752603350"></script>
+    <script src="/js/clipboard.min.js?1752650449"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752650449"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752650449"></script>
+    <script src="/js/jquery.sticky.js?1752650449"></script>
+    <script src="/js/featherlight.min.js?1752650449"></script>
+    <script src="/js/highlight.pack.js?1752650449"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752603350"></script>
-    <script src="/js/learn.js?1752603350"></script>
-    <script src="/js/hugo-learn.js?1752603350"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752650449"></script>
+    <script src="/js/learn.js?1752650449"></script>
+    <script src="/js/hugo-learn.js?1752650449"></script>
 
-    <link href="/mermaid/mermaid.css?1752603350" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752603350"></script>
+    <link href="/mermaid/mermaid.css?1752650449" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752650449"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

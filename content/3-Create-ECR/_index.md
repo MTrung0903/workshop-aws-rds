@@ -30,14 +30,45 @@ pre : " <b> 3. </b> "
 
 ### 2.2. Push Docker image to ECR
 
-1. **Ensure local Docker image**:
+1. **Prepare your application source code**:
+
+- Clone your Spring Boot project from GitHub (or prepare your source code):
+  ```bash
+  git clone https://github.com/MTrung0903/identity-service.git
+  cd <project-folder>
+  ```
+- Ensure a `Dockerfile` exists in the project root. If not, create one with the following content:
+  ```dockerfile
+  FROM maven:3.9.8-amazoncorretto-21 AS build
+  WORKDIR /app
+  COPY pom.xml .
+  COPY src ./src
+  RUN mvn package -DskipTests
+  FROM amazoncorretto:21.0.4
+  WORKDIR /app
+  COPY --from=build /app/target/*.jar app.jar
+  ENTRYPOINT ["java", "-jar", "app.jar"]
+
+  ```
+- Build the Spring Boot JAR file (if using Maven):
+  ```bash
+  ./mvnw clean package
+  # or
+  mvn clean package
+  ```
+- Build the Docker image:
+  ```bash
+  docker build -t <your-image-name>:<tag> .
+  ```
+
+2. **Ensure local Docker image**:
 
 - Verify local Spring Boot image (e.g. `trungho93/identity-service:0.9.0`):
 ```bash
 docker images
 ```
 
-2. **Log in to ECR**:
+3. **Log in to ECR**:
 
 - Run:
 ```bash
@@ -47,7 +78,7 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 
 - Output: `Login Succeeded`.
 
-3. **Tag and push image**: 
+4. **Tag and push image**: 
 - Tag images: 
 ```bash 
 docker tag trungho93/identity-service:0.9.0 <account-id>.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest 
@@ -61,5 +92,5 @@ docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest
 
 ![image](/images/push_image/screenshot_1752393822.png)
 ![image](/images/push_image/screenshot_1752393914.png)
-4. **Verification**: 
+5. **Verification**: 
 - Access **ECR Console**, select repository `spring-boot-app`, check image .

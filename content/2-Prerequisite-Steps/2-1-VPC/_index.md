@@ -9,6 +9,7 @@ pre : " <b> 2.1 </b> "
 
 1. **Access Amazon VPC Console**:
 - Open a browser and access: [https://console.aws.amazon.com/vpc/](https://console.aws.amazon.com/vpc/).
+![image](/images/tao_vpc/screenshot_1752387940.png)
 - Select **Create VPC** > **VPC and more**.
 
 2. **VPC configuration**:

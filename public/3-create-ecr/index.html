@@ -12,21 +12,21 @@
     <title>Create ECR Repository :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752606923" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752606923" rel="stylesheet">
-    <link href="/css/hybrid.css?1752606923" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752606923" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752606923" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752606923" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752606923" rel="stylesheet">
-    <link href="/css/theme.css?1752606923" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752606923" rel="stylesheet">
+    <link href="/css/nucleus.css?1752650449" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752650449" rel="stylesheet">
+    <link href="/css/hybrid.css?1752650449" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752650449" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752650449" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752650449" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752650449" rel="stylesheet">
+    <link href="/css/theme.css?1752650449" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752650449" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752606923" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1752650449" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752606923"></script>
+    <script src="/js/jquery-3.3.1.min.js?1752650449"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752606923"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752606923"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1752650449"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752650449"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752606923"></script>
+<script type="text/javascript" src="/js/search.js?1752650449"></script>
 
     
   </div>
@@ -658,13 +658,41 @@
 </ul>
 <h3 id="22-push-docker-image-to-ecr">2.2. Push Docker image to ECR</h3>
 <ol>
+<li><strong>Prepare your application source code</strong>:</li>
+</ol>
+<ul>
+<li>Clone your Spring Boot project from GitHub (or prepare your source code):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/MTrung0903/identity-service.git
+</span></span><span style="display:flex;"><span>cd &lt;project-folder&gt;
+</span></span></code></pre></div></li>
+<li>Ensure a <code>Dockerfile</code> exists in the project root. If not, create one with the following content:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> maven:3.9.8-amazoncorretto-21 AS build</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> pom.xml .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> src ./src<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> mvn package -DskipTests<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> amazoncorretto:21.0.4</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>build /app/target/*.jar app.jar<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;java&#34;</span>, <span style="color:#e6db74">&#34;-jar&#34;</span>, <span style="color:#e6db74">&#34;app.jar&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+<li>Build the Spring Boot JAR file (if using Maven):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mvnw clean package
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># or</span>
+</span></span><span style="display:flex;"><span>mvn clean package
+</span></span></code></pre></div></li>
+<li>Build the Docker image:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t &lt;your-image-name&gt;:&lt;tag&gt; .
+</span></span></code></pre></div></li>
+</ul>
+<ol start="2">
 <li><strong>Ensure local Docker image</strong>:</li>
 </ol>
 <ul>
 <li>Verify local Spring Boot image (e.g. <code>trungho93/identity-service:0.9.0</code>):</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker images
-</span></span></code></pre></div><ol start="2">
+</span></span></code></pre></div><ol start="3">
 <li><strong>Log in to ECR</strong>:</li>
 </ol>
 <ul>
@@ -679,7 +707,7 @@
 <p>Output: <code>Login Succeeded</code>.</p>
 </li>
 </ul>
-<ol start="3">
+<ol start="4">
 <li><strong>Tag and push image</strong>:</li>
 </ol>
 <ul>
@@ -694,7 +722,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker push &lt;account-id&gt;.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest 
 </span></span></code></pre></div><p><img src="/images/push_image/screenshot_1752393822.png" alt="image">
 <img src="/images/push_image/screenshot_1752393914.png" alt="image">
-4. <strong>Verification</strong>:</p>
+5. <strong>Verification</strong>:</p>
 <ul>
 <li>Access <strong>ECR Console</strong>, select repository <code>spring-boot-app</code>, check image .</li>
 </ul>
@@ -972,19 +1000,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752606923"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752606923"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752606923"></script>
-    <script src="/js/jquery.sticky.js?1752606923"></script>
-    <script src="/js/featherlight.min.js?1752606923"></script>
-    <script src="/js/highlight.pack.js?1752606923"></script>
+    <script src="/js/clipboard.min.js?1752650449"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752650449"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752650449"></script>
+    <script src="/js/jquery.sticky.js?1752650449"></script>
+    <script src="/js/featherlight.min.js?1752650449"></script>
+    <script src="/js/highlight.pack.js?1752650449"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752606923"></script>
-    <script src="/js/learn.js?1752606923"></script>
-    <script src="/js/hugo-learn.js?1752606923"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752650449"></script>
+    <script src="/js/learn.js?1752650449"></script>
+    <script src="/js/hugo-learn.js?1752650449"></script>
 
-    <link href="/mermaid/mermaid.css?1752606923" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752606923"></script>
+    <link href="/mermaid/mermaid.css?1752650449" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752650449"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

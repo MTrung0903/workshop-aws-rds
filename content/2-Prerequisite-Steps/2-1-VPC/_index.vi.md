@@ -9,6 +9,7 @@ pre : " <b> 2.1 </b> "
 
 1. **Truy cập Amazon VPC Console**:
    - Mở trình duyệt và truy cập: [https://console.aws.amazon.com/vpc/](https://console.aws.amazon.com/vpc/).
+   ![image](/images/tao_vpc/screenshot_1752387940.png)
    - Chọn **Create VPC** > **VPC and more**.
    ![image](/images/tao_vpc/screenshot_1752387940.png)
 2. **Cấu hình VPC**:
