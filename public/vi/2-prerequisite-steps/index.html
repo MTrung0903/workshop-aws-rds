@@ -12,21 +12,21 @@
     <title>Các bước chuẩn bị :: Tạo mới tài khoản AWS</title>
 
     
-    <link href="/css/nucleus.css?1752648355" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752648355" rel="stylesheet">
-    <link href="/css/hybrid.css?1752648355" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752648355" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752648355" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752648355" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752648355" rel="stylesheet">
-    <link href="/css/theme.css?1752648355" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752648355" rel="stylesheet">
+    <link href="/css/nucleus.css?1753077744" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1753077744" rel="stylesheet">
+    <link href="/css/hybrid.css?1753077744" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1753077744" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1753077744" rel="stylesheet">
+    <link href="/css/auto-complete.css?1753077744" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1753077744" rel="stylesheet">
+    <link href="/css/theme.css?1753077744" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1753077744" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752648355" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1753077744" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752648355"></script>
+    <script src="/js/jquery-3.3.1.min.js?1753077744"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752648355"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752648355"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1753077744"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1753077744"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/\/vi";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752648355"></script>
+<script type="text/javascript" src="/js/search.js?1753077744"></script>
 
     
   </div>
@@ -586,9 +586,18 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#các-bước-chuẩn-bị-hạ-tầng-aws">Các bước chuẩn bị hạ tầng AWS</a>
       <ul>
-        <li></li>
+        <li><a href="#checklist-nhanh">Checklist nhanh</a></li>
+        <li><a href="#1-tạo-vpc-virtual-private-cloud">1. Tạo VPC (Virtual Private Cloud)</a></li>
+        <li><a href="#2-tạo-subnet">2. Tạo Subnet</a></li>
+        <li><a href="#3-tạo-security-group-cho-ec2">3. Tạo Security Group cho EC2</a></li>
+        <li><a href="#4-tạo-security-group-cho-rds">4. Tạo Security Group cho RDS</a></li>
+        <li><a href="#5-tạo-db-subnet-group">5. Tạo DB Subnet Group</a></li>
+        <li><a href="#6-tạo-iam-role-cho-ec2-để-thao-tác-với-ecr">6. Tạo IAM Role cho EC2 (để thao tác với ECR)</a></li>
+        <li><a href="#lỗi-thường-gặp--cách-xử-lý">Lỗi thường gặp &amp; cách xử lý</a></li>
+        <li><a href="#xác-minh-sau-khi-hoàn-thành">Xác minh sau khi hoàn thành</a></li>
+        <li><a href="#tham-khảo-lệnh-aws-cli-nâng-cao">Tham khảo lệnh AWS CLI (nâng cao)</a></li>
       </ul>
     </li>
   </ul>
@@ -616,15 +625,106 @@
 
 
 
-	<h4 id="các-bước-chuẩn-bị">Các bước chuẩn bị</h4>
-<p><strong>Information</strong>: Trước khi triển khai Amazon RDS, bạn cần thiết lập môi trường mạng và bảo mật phù hợp. Các bước dưới đây sẽ giúp bạn chuẩn bị cơ sở hạ tầng cần thiết.</p>
-<ol>
-<li>Tạo VPC - Môi trường mạng ảo riêng biệt cho tài nguyên AWS của bạn</li>
-<li>Tạo subnet - Phân đoạn mạng trong VPC cho việc triển khai đa vùng sẵn sàng (Multi-AZ)</li>
-<li>Tạo Security Group cho Amazon EC2 - Kiểm soát lưu lượng mạng đến và đi từ máy chủ ứng dụng</li>
-<li>Tạo Security Group cho DB instance - Kiểm soát quyền truy cập mạng đến cơ sở dữ liệu RDS</li>
-<li>Tạo DB Subnet group - Xác định các subnet mà Amazon RDS có thể sử dụng trong VPC của bạn</li>
-</ol>
+	<h2 id="các-bước-chuẩn-bị-hạ-tầng-aws">Các bước chuẩn bị hạ tầng AWS</h2>
+<p><strong>Thông tin:</strong><br>
+Trước khi triển khai Amazon RDS và ứng dụng, bạn cần thiết lập môi trường mạng và bảo mật phù hợp. Các bước dưới đây sẽ giúp bạn chuẩn bị cơ sở hạ tầng cần thiết, đảm bảo an toàn và sẵn sàng cho các dịch vụ AWS.</p>
+<hr>
+<h3 id="checklist-nhanh">Checklist nhanh</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Đã có tài khoản AWS với quyền quản trị</li>
+<li><input disabled="" type="checkbox"> Đã xác định vùng (Region) triển khai (ví dụ: us-east-1)</li>
+<li><input disabled="" type="checkbox"> Đã chuẩn bị tên các tài nguyên (VPC, subnet, security group, v.v.) theo chuẩn đặt tên</li>
+</ul>
+<hr>
+<h3 id="1-tạo-vpc-virtual-private-cloud">1. Tạo VPC (Virtual Private Cloud)</h3>
+<p><strong>Mục đích:</strong><br>
+Tạo một môi trường mạng ảo riêng biệt để cô lập tài nguyên AWS, tăng bảo mật và kiểm soát lưu lượng.</p>
+<ul>
+<li>Thực hiện theo hướng dẫn chi tiết tại <a href="/vi/2-prerequisite-steps/2-1-vpc/">Tạo VPC</a></li>
+<li><strong>Lưu ý:</strong> Chọn dải IP phù hợp, bật DNS hostnames và DNS resolution.</li>
+</ul>
+<hr>
+<h3 id="2-tạo-subnet">2. Tạo Subnet</h3>
+<p><strong>Mục đích:</strong><br>
+Chia nhỏ VPC thành các subnet để triển khai đa vùng sẵn sàng (Multi-AZ), tách biệt subnet public (cho EC2) và private (cho RDS).</p>
+<ul>
+<li>Thực hiện theo hướng dẫn tại <a href="/vi/2-prerequisite-steps/2-1-vpc/">Tạo VPC</a></li>
+<li><strong>Lưu ý:</strong>
+<ul>
+<li>Tạo ít nhất 2 public subnet (cho EC2) và 2 private subnet (cho RDS).</li>
+<li>Bật auto-assign public IP cho các public subnet.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-tạo-security-group-cho-ec2">3. Tạo Security Group cho EC2</h3>
+<p><strong>Mục đích:</strong><br>
+Kiểm soát lưu lượng mạng đến/đi từ máy chủ ứng dụng (EC2), đảm bảo chỉ cho phép các kết nối cần thiết.</p>
+<ul>
+<li>Thực hiện theo hướng dẫn tại <a href="/vi/2-prerequisite-steps/2-2-security-group/">Tạo Security Group</a></li>
+<li><strong>Lưu ý:</strong>
+<ul>
+<li>Chỉ mở port 22 (SSH) cho IP của bạn.</li>
+<li>Mở port 80 (HTTP), 443 (HTTPS) cho public.</li>
+<li>Port 8080 chỉ mở cho Nginx hoặc để thử nghiệm.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-tạo-security-group-cho-rds">4. Tạo Security Group cho RDS</h3>
+<p><strong>Mục đích:</strong><br>
+Chỉ cho phép EC2 truy cập vào database, tăng bảo mật cho RDS.</p>
+<ul>
+<li>Thực hiện theo hướng dẫn tại <a href="/vi/2-prerequisite-steps/2-2-security-group/">Tạo Security Group</a></li>
+<li><strong>Lưu ý:</strong>
+<ul>
+<li>Chỉ mở port 3306 (MySQL) cho security group của EC2.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-tạo-db-subnet-group">5. Tạo DB Subnet Group</h3>
+<p><strong>Mục đích:</strong><br>
+Chỉ định các subnet private mà Amazon RDS có thể sử dụng, đảm bảo database không public ra internet.</p>
+<ul>
+<li>Thực hiện theo hướng dẫn tại <a href="/vi/2-prerequisite-steps/2-3-db-subnet/">Tạo DB Subnet Group</a></li>
+<li><strong>Lưu ý:</strong>
+<ul>
+<li>Chọn đúng 2 private subnet thuộc 2 AZ khác nhau.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="6-tạo-iam-role-cho-ec2-để-thao-tác-với-ecr">6. Tạo IAM Role cho EC2 (để thao tác với ECR)</h3>
+<p><strong>Mục đích:</strong><br>
+Cấp quyền cho EC2 instance có thể pull/push Docker image từ/to Amazon ECR.</p>
+<ul>
+<li>Thực hiện theo hướng dẫn tại <a href="/vi/2-prerequisite-steps/2-4-create-iam/">Tạo IAM Role cho ECR</a></li>
+<li><strong>Lưu ý:</strong>
+<ul>
+<li>Gắn đủ policy Read/Write cho ECR.</li>
+<li>Gán role này cho EC2 khi khởi tạo.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="lỗi-thường-gặp--cách-xử-lý">Lỗi thường gặp &amp; cách xử lý</h3>
+<ul>
+<li>Không tạo đủ subnet hoặc chọn sai loại subnet → RDS/EC2 không khởi tạo được.</li>
+<li>Security group không mở đúng port → EC2 không SSH được, EC2 không kết nối được RDS.</li>
+<li>Không gán IAM role cho EC2 → Không pull/push được image từ ECR.</li>
+</ul>
+<hr>
+<h3 id="xác-minh-sau-khi-hoàn-thành">Xác minh sau khi hoàn thành</h3>
+<ul>
+<li>Vào từng console (VPC, EC2, RDS, IAM) kiểm tra lại tài nguyên đã tạo đúng tên, đúng cấu hình.</li>
+<li>Kiểm tra các subnet, security group, DB subnet group đã liên kết đúng VPC.</li>
+<li>Lưu lại ID các tài nguyên để sử dụng cho các bước tiếp theo.</li>
+</ul>
+<hr>
+<h3 id="tham-khảo-lệnh-aws-cli-nâng-cao">Tham khảo lệnh AWS CLI (nâng cao)</h3>
+<p>Nếu muốn tự động hóa, bạn có thể tham khảo các lệnh AWS CLI tương ứng trong từng bước chi tiết.</p>
+<hr>
 
 
 
@@ -899,19 +999,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752648355"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752648355"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752648355"></script>
-    <script src="/js/jquery.sticky.js?1752648355"></script>
-    <script src="/js/featherlight.min.js?1752648355"></script>
-    <script src="/js/highlight.pack.js?1752648355"></script>
+    <script src="/js/clipboard.min.js?1753077744"></script>
+    <script src="/js/perfect-scrollbar.min.js?1753077744"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1753077744"></script>
+    <script src="/js/jquery.sticky.js?1753077744"></script>
+    <script src="/js/featherlight.min.js?1753077744"></script>
+    <script src="/js/highlight.pack.js?1753077744"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752648355"></script>
-    <script src="/js/learn.js?1752648355"></script>
-    <script src="/js/hugo-learn.js?1752648355"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1753077744"></script>
+    <script src="/js/learn.js?1753077744"></script>
+    <script src="/js/hugo-learn.js?1753077744"></script>
 
-    <link href="/mermaid/mermaid.css?1752648355" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752648355"></script>
+    <link href="/mermaid/mermaid.css?1753077744" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1753077744"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

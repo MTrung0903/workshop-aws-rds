@@ -12,21 +12,21 @@
     <title>Preparation Steps :: Create a new AWS account.</title>
 
     
-    <link href="/css/nucleus.css?1752650449" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752650449" rel="stylesheet">
-    <link href="/css/hybrid.css?1752650449" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752650449" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752650449" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752650449" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752650449" rel="stylesheet">
-    <link href="/css/theme.css?1752650449" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752650449" rel="stylesheet">
+    <link href="/css/nucleus.css?1753077744" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1753077744" rel="stylesheet">
+    <link href="/css/hybrid.css?1753077744" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1753077744" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1753077744" rel="stylesheet">
+    <link href="/css/auto-complete.css?1753077744" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1753077744" rel="stylesheet">
+    <link href="/css/theme.css?1753077744" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1753077744" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752650449" rel="stylesheet">
+    <link href="/css/theme-workshop.css?1753077744" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1752650449"></script>
+    <script src="/js/jquery-3.3.1.min.js?1753077744"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +57,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752650449"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752650449"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1753077744"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1753077744"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752650449"></script>
+<script type="text/javascript" src="/js/search.js?1753077744"></script>
 
     
   </div>
@@ -586,9 +586,18 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#aws-infrastructure-preparation-steps">AWS Infrastructure Preparation Steps</a>
       <ul>
-        <li></li>
+        <li><a href="#quick-checklist">Quick Checklist</a></li>
+        <li><a href="#1-create-a-vpc-virtual-private-cloud">1. Create a VPC (Virtual Private Cloud)</a></li>
+        <li><a href="#2-create-subnet">2. Create Subnet</a></li>
+        <li><a href="#3-create-security-group-for-ec2">3. Create Security Group for EC2</a></li>
+        <li><a href="#4-create-security-group-for-rds">4. Create Security Group for RDS</a></li>
+        <li><a href="#5-create-db-subnet-group">5. Create DB Subnet Group</a></li>
+        <li><a href="#6-create-iam-role-for-ec2-to-work-with-ecr">6. Create IAM Role for EC2 (to work with ECR)</a></li>
+        <li><a href="#common-errors--how-to-handle">Common errors &amp; how to handle</a></li>
+        <li><a href="#verify-after-completion">Verify after completion</a></li>
+        <li><a href="#refer-to-aws-cli-commands-advanced">Refer to AWS CLI commands (advanced)</a></li>
       </ul>
     </li>
   </ul>
@@ -616,15 +625,121 @@
 
 
 
-	<h4 id="preparation-steps">Preparation Steps</h4>
-<p><strong>Information</strong>: Before deploying Amazon RDS, you need to set up the appropriate network and security environment. The following steps will help you prepare the necessary infrastructure.</p>
-<ol>
-<li>Create a VPC - A separate virtual network environment for your AWS resources</li>
-<li>Create a subnet - Segment the network within the VPC for a multi-AZ deployment</li>
-<li>Create a Security Group for Amazon EC2 - Control network traffic to and from the application server</li>
-<li>Create a Security Group for a DB instance - Control network access to the RDS database</li>
-<li>Create a DB Subnet group - Define the subnets that Amazon RDS can use in your VPC</li>
-</ol>
+	<h2 id="aws-infrastructure-preparation-steps">AWS Infrastructure Preparation Steps</h2>
+<p><strong>Information:</strong>
+Before you deploy Amazon RDS and your applications, you need to set up the appropriate network and security environment. The steps below will help you prepare the necessary infrastructure, ensure it is secure, and ready for AWS services.</p>
+<hr>
+<h3 id="quick-checklist">Quick Checklist</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Have an AWS account with administrative rights</li>
+<li><input disabled="" type="checkbox"> Have defined the deployment region (e.g. us-east-1)</li>
+<li><input disabled="" type="checkbox"> Have prepared resource names (VPC, subnet, security group, etc.) according to the naming standard</li>
+</ul>
+<hr>
+<h3 id="1-create-a-vpc-virtual-private-cloud">1. Create a VPC (Virtual Private Cloud)</h3>
+<p><strong>Purpose:</strong>
+Create a separate virtual network environment to isolate AWS resources, increase security and control traffic.</p>
+<ul>
+<li>Follow the detailed instructions at <a href="/2-prerequisite-steps/2-1-vpc/">Create VPC</a></li>
+<li><strong>Note:</strong> Select the appropriate IP range, enable DNS hostnames and DNS resolution.</li>
+</ul>
+<hr>
+<h3 id="2-create-subnet">2. Create Subnet</h3>
+<p><strong>Purpose:</strong>
+Divide VPC into subnets for Multi-AZ deployment, separate public (for EC2) and private (for RDS) subnets.</p>
+<ul>
+<li>Follow the instructions at <a href="/2-prerequisite-steps/2-1-vpc/">Create VPC</a></li>
+<li><strong>Note:</strong></li>
+<li>Create at least 2 public subnets (for EC2) and 2 private subnets (for RDS).</li>
+<li>Enable auto-assign public IP for public subnets.</li>
+</ul>
+<hr>
+<h3 id="3-create-security-group-for-ec2">3. Create Security Group for EC2</h3>
+<p><strong>Purpose:</strong>
+Control network traffic to/from application server (EC2), ensure only necessary connections are allowed.</p>
+<ul>
+<li>
+<p>Follow the instructions at <a href="/2-prerequisite-steps/2-2-security-group/">Create Security Group</a></p>
+</li>
+<li>
+<p><strong>Note:</strong></p>
+</li>
+<li>
+<p>Only open port 22 (SSH) for your IP.</p>
+</li>
+<li>
+<p>Open port 80 (HTTP), 443 (HTTPS) for public.</p>
+</li>
+<li>
+<p>Port 8080 is only open for Nginx or for testing.</p>
+</li>
+</ul>
+<hr>
+<h3 id="4-create-security-group-for-rds">4. Create Security Group for RDS</h3>
+<p><strong>Purpose:</strong>
+Only allow EC2 to access the database, increase security for RDS.</p>
+<ul>
+<li>Follow the instructions at <a href="/2-prerequisite-steps/2-2-security-group/">Create Security Group</a></li>
+<li><strong>Note:</strong></li>
+<li>Only open port 3306 (MySQL) for EC2&rsquo;s security group.</li>
+</ul>
+<hr>
+<h3 id="5-create-db-subnet-group">5. Create DB Subnet Group</h3>
+<p><strong>Purpose:</strong>
+Specify the private subnets that Amazon RDS can use, ensuring that the database is not public to the internet.</p>
+<ul>
+<li>Follow the instructions at <a href="/2-prerequisite-steps/2-3-db-subnet/">Create DB Subnet Group</a></li>
+<li><strong>Note:</strong></li>
+<li>Select the correct 2 private subnets belonging to 2 different AZs.</li>
+</ul>
+<hr>
+<h3 id="6-create-iam-role-for-ec2-to-work-with-ecr">6. Create IAM Role for EC2 (to work with ECR)</h3>
+<p><strong>Purpose:</strong>
+Give permission for EC2 instance to pull/push Docker images from/to Amazon ECR.</p>
+<ul>
+<li>
+<p>Follow the instructions at <a href="/2-prerequisite-steps/2-4-create-iam/">Create IAM Role for ECR</a></p>
+</li>
+<li>
+<p><strong>Note:</strong></p>
+</li>
+<li>
+<p>Attach enough Read/Write policies to ECR.</p>
+</li>
+<li>
+<p>Assign this role to EC2 when initializing.</p>
+</li>
+</ul>
+<hr>
+<h3 id="common-errors--how-to-handle">Common errors &amp; how to handle</h3>
+<ul>
+<li>
+<p>Not creating enough subnets or choosing the wrong subnet type → RDS/EC2 cannot initialize.</p>
+</li>
+<li>
+<p>Security group does not open the correct port → EC2 cannot SSH, EC2 cannot connect to RDS.</p>
+</li>
+<li>
+<p>Not assigning IAM role to EC2 → Cannot pull/push image from ECR.</p>
+</li>
+</ul>
+<hr>
+<h3 id="verify-after-completion">Verify after completion</h3>
+<ul>
+<li>
+<p>Go to each console (VPC, EC2, RDS, IAM) to check that the created resources have the correct name and configuration.</p>
+</li>
+<li>
+<p>Check that the subnets, security groups, DB subnet groups are correctly linked to the VPC.</p>
+</li>
+<li>
+<p>Save the resource IDs for use in the next steps.</p>
+</li>
+</ul>
+<hr>
+<h3 id="refer-to-aws-cli-commands-advanced">Refer to AWS CLI commands (advanced)</h3>
+<p>If you want to automate, you can refer to the corresponding AWS CLI commands in each detailed step.</p>
+<hr>
 
 
 
@@ -899,19 +1014,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752650449"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752650449"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752650449"></script>
-    <script src="/js/jquery.sticky.js?1752650449"></script>
-    <script src="/js/featherlight.min.js?1752650449"></script>
-    <script src="/js/highlight.pack.js?1752650449"></script>
+    <script src="/js/clipboard.min.js?1753077744"></script>
+    <script src="/js/perfect-scrollbar.min.js?1753077744"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1753077744"></script>
+    <script src="/js/jquery.sticky.js?1753077744"></script>
+    <script src="/js/featherlight.min.js?1753077744"></script>
+    <script src="/js/highlight.pack.js?1753077744"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752650449"></script>
-    <script src="/js/learn.js?1752650449"></script>
-    <script src="/js/hugo-learn.js?1752650449"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1753077744"></script>
+    <script src="/js/learn.js?1753077744"></script>
+    <script src="/js/hugo-learn.js?1753077744"></script>
 
-    <link href="/mermaid/mermaid.css?1752650449" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1752650449"></script>
+    <link href="/mermaid/mermaid.css?1753077744" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1753077744"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
